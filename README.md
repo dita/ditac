@@ -1,4 +1,4 @@
 ditac
 =====
 
-Fork of XMLMind DITA Converter (ditac)
+Fork of the [XMLMind DITA Converter](http://www.xmlmind.com/ditac/) (ditac).

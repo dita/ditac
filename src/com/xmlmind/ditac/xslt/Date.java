@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2011 Pixware SARL. All rights reserved.
+ * Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -18,15 +18,22 @@ import java.text.ParseException;
 
     // -----------------------------------------------------------------------
 
-    private static SimpleDateFormat inFormat = 
-        new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-    static {
-        inFormat.setLenient(false);
-    }
-
     public static String format(String value, String lang) {
         try {
-            java.util.Date date = inFormat.parse(value);
+            java.util.Date date;
+            value = value.trim();
+            if (value.length() == 0) {
+                date = new java.util.Date();
+            } else {
+                // Date formats are not synchronized. It is recommended to
+                // create separate format instances for each thread.
+
+                SimpleDateFormat inFormat = 
+                    new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                inFormat.setLenient(false);
+
+                date = inFormat.parse(value);
+            }
 
             DateFormat outFormat = 
                 DateFormat.getDateInstance(DateFormat.LONG, new Locale(lang));

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2009 Pixware. 
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved. 
  *
  * Author: Hussein Shafie
  *
@@ -37,6 +37,7 @@ public final class VersionNumber implements Comparable<VersionNumber> {
          */
         PATCH;
 
+        @Override
         public String toString() {
             switch (ordinal()) {
             case 0:
@@ -257,10 +258,11 @@ public final class VersionNumber implements Comparable<VersionNumber> {
         } catch (NumberFormatException e) {
             return fallback;
         }
-        if (num < min || num > max)
+        if (num < min || num > max) {
             return fallback;
-        else
+        } else {
             return num;
+        }
     }
 
 
@@ -297,18 +299,22 @@ public final class VersionNumber implements Comparable<VersionNumber> {
      */
     public VersionNumber(int major, int minor, int micro, 
                          LevelType levelType, int level) {
-        if (major < 0 || major >= 1000)
+        if (major < 0 || major >= 1000) {
             throw new IllegalArgumentException("invalid major " + major);
+        }
 
-        if (minor < 0 || minor >= 1000)
+        if (minor < 0 || minor >= 1000) {
             throw new IllegalArgumentException("invalid minor " + minor);
+        }
 
-        if (micro < 0 || micro >= 1000)
+        if (micro < 0 || micro >= 1000) {
             throw new IllegalArgumentException("invalid micro " + micro);
+        }
 
-        if (level < 0 || level >= 1000)
+        if (level < 0 || level >= 1000) {
             throw new IllegalArgumentException("invalid " + levelType + 
                                                " level " + level);
+        }
 
         this.major = major;
         this.minor = minor;
@@ -317,6 +323,7 @@ public final class VersionNumber implements Comparable<VersionNumber> {
         this.level = level;
     }
 
+    @Override
     public int hashCode() {
         return (int) toLong();
     }
@@ -326,9 +333,11 @@ public final class VersionNumber implements Comparable<VersionNumber> {
                 1000L*1000L*micro + 1000L*(levelType.ordinal()+1) + level);
     }
 
+    @Override
     public boolean equals(Object other) {
-        if (other == null || !(other instanceof VersionNumber))
+        if (other == null || !(other instanceof VersionNumber)) {
             return false;
+        }
         VersionNumber o = (VersionNumber) other;
         return (toLong() == o.toLong());
     }
@@ -343,12 +352,13 @@ public final class VersionNumber implements Comparable<VersionNumber> {
 
     public int compareTo(VersionNumber other) {
         long delta = (toLong() - other.toLong());
-        if (delta < 0)
+        if (delta < 0) {
             return -1;
-        else if (delta > 0)
+        } else if (delta > 0) {
             return 1;
-        else
+        } else {
             return 0;
+        }
     }
 
     /**
@@ -359,6 +369,7 @@ public final class VersionNumber implements Comparable<VersionNumber> {
      * <i>major</i>.<i>minor</i>.<i>micro</i>
      * (<b>-alpha</b>|<b>-beta</b>|<b>_</b>)<i>level</i>.
      */
+    @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
 
@@ -377,10 +388,11 @@ public final class VersionNumber implements Comparable<VersionNumber> {
             buffer.append("-beta");
             break;
         default:
-            if (level == 0)
+            if (level == 0) {
                 appendLevel = false;
-            else
+            } else {
                 buffer.append('_');
+            }
         }
 
         if (appendLevel) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013 Pixware SARL. All rights reserved.
+ * Copyright (c) 2010-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -996,7 +996,7 @@ import static com.xmlmind.ditac.preprocess.CascadeMeta.CASCADED_ELEMENT_SINGLE;
             }
             System.out.println(topic.topicId);
 
-            LoadedTopic[] subTopics = topic.topics;
+            LoadedTopic[] subTopics = topic.getNestedTopics();
             if (subTopics != null) {
                 listTopics(subTopics, indent+4);
             }

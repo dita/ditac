@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2013 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -114,7 +114,7 @@ public final class SystemUtil {
      *
      * @param dir the custom user preferences directory 
      * The fact that <tt>dir</tt> exists or is a directory is not checked.
-     * <p>Specify <code>null<code> to revert to the default 
+     * <p>Specify <code>null</code> to revert to the default 
      * user preferences directory of this application.
      * @see #userPreferencesDir()
      */
@@ -193,8 +193,9 @@ public final class SystemUtil {
 
         if (buffer.length() == 0) {
             File homeDir = homeDir();
-            if (homeDir == null)
+            if (homeDir == null) {
                 return null;
+            }
             buffer.append(homeDir.getPath());
 
             if (IS_WINDOWS) {
@@ -311,9 +312,14 @@ public final class SystemUtil {
     public static final VersionNumber JAVA_1_7_0 = new VersionNumber(1, 7, 0);
 
     /**
-     * <code>true</true> if the current Java runtime has been developed by
+     * Java v1.8.0.
+     */
+    public static final VersionNumber JAVA_1_8_0 = new VersionNumber(1, 8, 0);
+
+    /**
+     * <code>true</code> if the current Java runtime has been developed by
      * Apple (that is, runs on Mac OS X and Java version is less than 
-     * {@link #JAVA_1_7_0}); <code>false</true> if it has been developed 
+     * {@link #JAVA_1_7_0}); <code>false</code> if it has been developed 
      * by Sun/Oracle.
      */
     public static final boolean IS_APPLE_JAVA =

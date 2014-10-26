@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2012 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -963,10 +963,11 @@ public final class StringUtil {
         int length = string.length();
 
         if (length >= 2 && 
-            string.charAt(0) == '\"' && string.charAt(length-1) == '\"')
+            string.charAt(0) == '\"' && string.charAt(length-1) == '\"') {
             return unescape(string, 1, length-2);
-        else
+        } else {
             return unescape(string, 0, length);
+        }
     }
 
     /**
@@ -982,6 +983,7 @@ public final class StringUtil {
         return unescape(string, 0, string.length());
     }
 
+    @SuppressWarnings("fallthrough")
     private static String unescape(String string, int offset, int length) {
         StringBuilder buffer = new StringBuilder();
 

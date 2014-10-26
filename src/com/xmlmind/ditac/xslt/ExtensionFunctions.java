@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 Pixware SARL. All rights reserved.
+ * Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -16,6 +16,8 @@ import net.sf.saxon.value.DoubleValue;
 import net.sf.saxon.value.StringValue;
 import net.sf.saxon.om.StructuredQName; 
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
@@ -23,19 +25,19 @@ import net.sf.saxon.Configuration;
 import net.sf.saxon.TransformerFactoryImpl;
 
 /**
- * This class allows to register with Saxon 9.2+ all the extension functions 
+ * This class allows to register with Saxon 9.5+ all the extension functions 
  * needed to run the XSL stylesheets found in
  * <tt><i>ditac_install_dir</i>/xsl/</tt>.
  */
 public final class ExtensionFunctions {
     /**
-     * Registers with Saxon 9.2+ all the extension functions 
+     * Registers with Saxon 9.5+ all the extension functions 
      * needed to run the XSL stylesheets found in 
      * <tt><i>ditac_install_dir</i>/xsl/</tt>.
      * <p>This method must be invoked once per TransformerFactory.
      *
      * @param factory the TransformerFactory pointing to
-     * Saxon 9.2+ extension function registry 
+     * Saxon 9.5+ extension function registry 
      * (that is, a <tt>net.sf.saxon.Configuration</tt>). 
      * This object must be an instance of 
      * <tt>net.sf.saxon.TransformerFactoryImpl</tt>.
@@ -43,6 +45,9 @@ public final class ExtensionFunctions {
     public static void registerAll(TransformerFactory factory) 
         throws Exception {
         Configuration config = Configuration.newConfiguration();
+        /*
+        config.setCompileWithTracing(true);
+        */
 
         config.registerExtensionFunction(new DecodeURIDefinition());
         config.registerExtensionFunction(new UserDirectoryDefinition());
@@ -100,14 +105,13 @@ public final class ExtensionFunctions {
     }
 
     public static final class DecodeURICall extends ExtensionFunctionCall {
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
-            StringValue arg = (StringValue) arguments[0].next();
+            StringValue arg = (StringValue) arguments[0].iterate().next();
 
             String result = URI.decodeURI(arg.getStringValue());
 
-            return (new StringValue(result)).iterate();
+            return new StringValue(result);
         }
     }
 
@@ -147,12 +151,11 @@ public final class ExtensionFunctions {
     }
 
     public static final class UserDirectoryCall extends ExtensionFunctionCall {
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
             String result = URI.userDirectory();
 
-            return (new StringValue(result)).iterate();
+            return new StringValue(result);
         }
     }
 
@@ -192,12 +195,11 @@ public final class ExtensionFunctions {
     }
 
     public static final class UuidUriCall extends ExtensionFunctionCall {
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
             String result = URI.uuidURI();
 
-            return (new StringValue(result)).iterate();
+            return new StringValue(result);
         }
     }
 
@@ -232,16 +234,15 @@ public final class ExtensionFunctions {
     }
 
     public static final class CopyFileCall extends ExtensionFunctionCall {
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
-            StringValue src = (StringValue) arguments[0].next();
-            StringValue dst = (StringValue) arguments[1].next();
+            StringValue src = (StringValue) arguments[0].iterate().next();
+            StringValue dst = (StringValue) arguments[1].iterate().next();
 
             int copied = URI.copyFile(src.getStringValue(), 
                                       dst.getStringValue());
 
-            return (new DoubleValue(copied)).iterate();
+            return new DoubleValue(copied);
         }
     }
 
@@ -275,14 +276,13 @@ public final class ExtensionFunctions {
     }
 
     public static final class GetImageWidthCall extends ExtensionFunctionCall {
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
-            StringValue arg = (StringValue) arguments[0].next();
+            StringValue arg = (StringValue) arguments[0].iterate().next();
 
             int result = Image.getWidth(arg.getStringValue());
 
-            return (new DoubleValue(result)).iterate();
+            return new DoubleValue(result);
         }
     }
 
@@ -316,14 +316,13 @@ public final class ExtensionFunctions {
     }
 
     public static final class GetImageHeightCall extends ExtensionFunctionCall {
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
-            StringValue arg = (StringValue) arguments[0].next();
+            StringValue arg = (StringValue) arguments[0].iterate().next();
 
             int result = Image.getHeight(arg.getStringValue());
 
-            return (new DoubleValue(result)).iterate();
+            return new DoubleValue(result);
         }
     }
 
@@ -358,16 +357,15 @@ public final class ExtensionFunctions {
     }
 
     public static final class FormatDateCall extends ExtensionFunctionCall {
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
-            StringValue arg0 = (StringValue) arguments[0].next();
-            StringValue arg1 = (StringValue) arguments[1].next();
+            StringValue arg0 = (StringValue) arguments[0].iterate().next();
+            StringValue arg1 = (StringValue) arguments[1].iterate().next();
 
             String result = Date.format(arg0.getStringValue(),
                                         arg1.getStringValue());
 
-            return (new StringValue(result)).iterate();
+            return new StringValue(result);
         }
     }
 
@@ -420,24 +418,25 @@ public final class ExtensionFunctions {
             this.highlightMethod = highlightMethod;
         }
 
-        public SequenceIterator call(SequenceIterator[] arguments,
-                                     XPathContext context)
+        public Sequence call(XPathContext context, Sequence[] arguments)
             throws XPathException {
-            StringValue arg0 = (StringValue) arguments[0].next();
+            StringValue arg0 = (StringValue) arguments[0].iterate().next();
             String hlCode = arg0.getStringValue();
 
-            SequenceIterator nodes = arguments[1];
+            SequenceIterator nodes = arguments[1].iterate();
 
             String configFilename = null;
             if (arguments.length > 2) {
-                StringValue arg2 = (StringValue) arguments[2].next();
+                StringValue arg2 = (StringValue) arguments[2].iterate().next();
                 configFilename = arg2.getStringValue();
             }
 
             try {
-                return (SequenceIterator) 
+                SequenceIterator result = (SequenceIterator) 
                     highlightMethod.invoke(null, context,
                                            hlCode, nodes, configFilename);
+
+                return SequenceTool.toGroundedValue(result);
             } catch (Exception shouldNotHappen) {
                 shouldNotHappen.printStackTrace();
                 return null;

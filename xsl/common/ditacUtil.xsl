@@ -20,25 +20,25 @@
   <xsl:param name="ditacListsURI" required="yes"/>
   <xsl:variable name="ditacLists" select="doc($ditacListsURI)/ditac:lists"/>
 
-  <xsl:variable name="title-prefix-separator2"
+  <xsl:variable name="title-prefix-separator2" 
                 select="u:localize('commaSeparator', $ditacLists)"/>
 
   <xsl:variable name="index-term-separator"
                 select="u:localize('commaSeparator', $ditacLists)"/>
-  <xsl:variable name="index-term-see-separator"
+  <xsl:variable name="index-term-see-separator" 
                 select="u:localize('periodSeparator', $ditacLists)"/>
-  <xsl:variable name="index-hierarchical-term-separator"
+  <xsl:variable name="index-hierarchical-term-separator" 
                 select="u:localize('commaSeparator', $ditacLists)"/>
-  <xsl:variable name="index-see-separator"
+  <xsl:variable name="index-see-separator" 
                 select="u:localize('semiColonSeparator', $ditacLists)"/>
 
   <!-- hasIndex ========================================================== -->
 
   <xsl:function name="u:hasIndex" as="xs:boolean">
-    <!-- Non empty indexList and
+    <!-- Non empty indexList and 
          a chunk which contains an index placeholder. -->
     <xsl:sequence
-      select="exists($ditacLists/ditac:indexList/*) and
+      select="exists($ditacLists/ditac:indexList/*) and 
              exists($ditacLists/ditac:chunkList/ditac:chunk/ditac:indexList)"/>
   </xsl:function>
 
@@ -49,25 +49,17 @@
 
     <xsl:variable name="rootName" select="u:chunkRootName($docURI)"/>
 
-<!-- gar -->
-<xsl:message>
- ducURI <xsl:value-of select="$docURI"/>
-  <!-- file: <xsl:value-of select="@file"/> -->
-  <!-- matchrootname: <xsl:value-of select="u:matchRootName(@file,$rootName)"/> -->
-      rootname: <xsl:value-of select="$rootName"/>
-</xsl:message>
-
-    <xsl:sequence
-      select="$ditacLists/ditac:chunkList/ditac:chunk[u:matchRootName(@file,
+    <xsl:sequence 
+      select="$ditacLists/ditac:chunkList/ditac:chunk[u:matchRootName(@file, 
                                                                  $rootName)]"/>
   </xsl:function>
 
   <xsl:function name="u:chunkRootName" as="xs:string">
     <xsl:param name="docURI" as="xs:anyURI"/>
 
-    <!-- $docURI is something like "file:/tmp/foo.ditac",
+    <!-- $docURI is something like "file:/tmp/foo.ditac", 
          while chunk/@file is something like "foo.html". -->
-
+    
     <xsl:variable name="baseName" select="u:basename($docURI)"/>
 
     <xsl:sequence select="substring-before($baseName, '.ditac')"/>
@@ -129,7 +121,7 @@
 
   <!-- topicEntry ======================================================== -->
 
-  <xsl:key name="topicEntries"
+  <xsl:key name="topicEntries" 
            match="ditac:chunkList/ditac:chunk/ditac:topic" use="string(@id)"/>
 
   <xsl:function name="u:topicEntry" as="element()?">
@@ -153,7 +145,7 @@
         </xsl:when>
 
         <xsl:when test="$firstChildName eq 'topic'">
-          <xsl:value-of
+          <xsl:value-of 
             select="u:autoTitle($firstChild/@title, $chunk)"/>
         </xsl:when>
 
@@ -177,7 +169,7 @@
 
     <xsl:choose>
       <xsl:when test="$prefix ne ''">
-        <xsl:sequence
+        <xsl:sequence 
           select="concat($prefix, $title-prefix-separator1, $title)"/>
       </xsl:when>
       <xsl:otherwise>
@@ -189,11 +181,11 @@
   <!-- documentTitle ===================================================== -->
 
   <xsl:function name="u:documentTitle" as="xs:string">
-    <xsl:variable name="title"
+    <xsl:variable name="title" 
      select="$ditacLists/ditac:titlePage/*[contains(@class,' topic/title ')]"/>
 
     <xsl:choose>
-      <!-- When PreProcess option forceTitlePage is set to true,
+      <!-- When PreProcess option forceTitlePage is set to true, 
            ditac:titlePage/title may be empty. -->
       <xsl:when test="string($title) ne ''">
         <!-- bookmap/booktitle is a specialization of topic/title. -->
@@ -276,10 +268,10 @@
 
   <xsl:function name="u:autoTextRole" as="xs:string">
     <xsl:param name="autoText" as="xs:string"/>
-
-    <xsl:sequence select="if (starts-with($autoText, '__AUTO__') and
+    
+    <xsl:sequence select="if (starts-with($autoText, '__AUTO__') and 
                               ends-with($autoText, '__'))
-                          then substring($autoText, 9,
+                          then substring($autoText, 9, 
                                          string-length($autoText) - 10)
                           else ''"/>
   </xsl:function>
@@ -309,7 +301,7 @@
 
   <!-- tocEntry ========================================================== -->
 
-  <xsl:key name="tocEntries"
+  <xsl:key name="tocEntries" 
            match="ditac:toc//ditac:tocEntry" use="string(@id)"/>
 
   <xsl:function name="u:tocEntry" as="element()?">
@@ -325,7 +317,7 @@
 
     <xsl:variable name="title" select="u:tocEntryAutoTitle($tocEntry)"/>
 
-    <xsl:variable name="prefix"
+    <xsl:variable name="prefix" 
                   select="u:shortTitlePrefix(string($tocEntry/@number),
                                              $tocEntry)"/>
 
@@ -345,28 +337,28 @@
   <xsl:function name="u:shortTitlePrefix" as="xs:string">
     <xsl:param name="spec" as="xs:string"/>
     <xsl:param name="context" as="element()"/>
-
+    
     <xsl:variable name="parts" select="u:splitSpec($spec)"/>
     <xsl:variable name="lastPart" select="$parts[last()]"/>
 
     <xsl:choose>
       <!-- format part|chapter|appendix -->
-      <xsl:when test="(starts-with($lastPart, 'part.') and
-                       (index-of($numberList, 'all') ge 1 or
-                        index-of($numberList, 'topic') ge 1 or
+      <xsl:when test="(starts-with($lastPart, 'part.') and 
+                       (index-of($numberList, 'all') ge 1 or 
+                        index-of($numberList, 'topic') ge 1 or 
                         index-of($numberList, 'chapter-only') ge 1))
                       or
-                      (starts-with($lastPart, 'chapter.') and
-                       (index-of($numberList, 'all') ge 1 or
-                        index-of($numberList, 'topic') ge 1 or
+                      (starts-with($lastPart, 'chapter.') and 
+                       (index-of($numberList, 'all') ge 1 or 
+                        index-of($numberList, 'topic') ge 1 or 
                         index-of($numberList, 'chapter-only') ge 1))
                       or
-                      (starts-with($lastPart, 'appendix.') and
-                       (index-of($numberList, 'all') ge 1 or
-                        index-of($numberList, 'topic') ge 1 or
+                      (starts-with($lastPart, 'appendix.') and 
+                       (index-of($numberList, 'all') ge 1 or 
+                        index-of($numberList, 'topic') ge 1 or 
                         index-of($numberList, 'chapter-only') ge 1))">
-        <xsl:variable name="label"
-                      select="u:localize(substring-before($lastPart, '.'),
+        <xsl:variable name="label" 
+                      select="u:localize(substring-before($lastPart, '.'), 
                                          $context)"/>
 
         <xsl:variable name="num"
@@ -375,25 +367,25 @@
         <xsl:sequence select="concat($label, '&#xA0;', $num)"/>
       </xsl:when>
 
-      <!-- Format everything after section1.
-           If option prepend-chapter-to-section-number,
+      <!-- Format everything after section1. 
+           If option prepend-chapter-to-section-number, 
            prepend (chapter|appendix)? -->
-      <xsl:when test="((starts-with($lastPart, 'section1.') or
-                        starts-with($lastPart, 'section2.') or
-                        starts-with($lastPart, 'section3.') or
-                        starts-with($lastPart, 'section4.') or
-                        starts-with($lastPart, 'section5.') or
-                        starts-with($lastPart, 'section6.') or
-                        starts-with($lastPart, 'section7.') or
-                        starts-with($lastPart, 'section8.') or
-                        starts-with($lastPart, 'section9.')) and
-                       (index-of($numberList, 'all') ge 1 or
+      <xsl:when test="((starts-with($lastPart, 'section1.') or 
+                        starts-with($lastPart, 'section2.') or 
+                        starts-with($lastPart, 'section3.') or 
+                        starts-with($lastPart, 'section4.') or 
+                        starts-with($lastPart, 'section5.') or 
+                        starts-with($lastPart, 'section6.') or 
+                        starts-with($lastPart, 'section7.') or 
+                        starts-with($lastPart, 'section8.') or 
+                        starts-with($lastPart, 'section9.')) and 
+                       (index-of($numberList, 'all') ge 1 or 
                         index-of($numberList, 'topic') ge 1))">
         <xsl:variable name="label" select="u:localize('section', $context)"/>
 
         <xsl:variable name="first"
                       select="for $part in $parts
-                              return
+                              return 
                                   if (starts-with($part, 'section1.')) then
                                       index-of($parts, $part)
                                   else
@@ -403,8 +395,8 @@
           <xsl:when test="$first ge 1">
             <xsl:variable name="from"
               select="if ($prepend-chapter-to-section-number eq 'yes' and
-                          $first gt 1 and
-                          (starts-with($parts[$first - 1], 'chapter.') or
+                          $first gt 1 and 
+                          (starts-with($parts[$first - 1], 'chapter.') or 
                            starts-with($parts[$first - 1], 'appendix.'))) then
                           $first - 1
                       else
@@ -427,24 +419,24 @@
 
       <!-- Format (chapter|appendix)? table|figure|example.
            Note that 'all' includes 'table' and 'figure' but not 'example'.  -->
-      <xsl:when test="(starts-with($lastPart, 'table.') and
-                       (index-of($numberList, 'all') ge 1 or
+      <xsl:when test="(starts-with($lastPart, 'table.') and 
+                       (index-of($numberList, 'all') ge 1 or 
                         index-of($numberList, 'table') ge 1))
                       or
-                      (starts-with($lastPart, 'figure.') and
-                       (index-of($numberList, 'all') ge 1 or
+                      (starts-with($lastPart, 'figure.') and 
+                       (index-of($numberList, 'all') ge 1 or 
                         index-of($numberList, 'fig') ge 1))
                       or
-                      (starts-with($lastPart, 'example.') and
+                      (starts-with($lastPart, 'example.') and 
                        index-of($numberList, 'example') ge 1)">
-        <xsl:variable name="label"
-                      select="u:localize(substring-before($lastPart, '.'),
+        <xsl:variable name="label" 
+                      select="u:localize(substring-before($lastPart, '.'), 
                                          $context)"/>
 
-        <xsl:variable name="partRange"
-                      select="if (starts-with($parts[1], 'part.')) then
-                                  remove($parts, 1)
-                              else
+        <xsl:variable name="partRange" 
+                      select="if (starts-with($parts[1], 'part.')) then 
+                                  remove($parts, 1) 
+                              else 
                                   $parts"/>
         <xsl:variable name="num"
           select="u:formatNumbers($partRange, $number-separator2)"/>
@@ -464,10 +456,10 @@
 
     <xsl:variable name="parts" select="tokenize($spec, '\s+')"/>
 
-    <!-- There is at most a single appendices element per bookmap.
+    <!-- There is at most a single appendices element per bookmap.  
          Therefore it does not make sense to number it. -->
 
-    <xsl:sequence select="if ($parts[1] eq 'appendices.1')
+    <xsl:sequence select="if ($parts[1] eq 'appendices.1') 
                           then subsequence($parts, 2)
                           else $parts" />
   </xsl:function>
@@ -480,7 +472,7 @@
          ('appendices.1' has already been filtered out from the tocEntry
          number.) -->
 
-    <xsl:variable name="numList"
+    <xsl:variable name="numList" 
       select="for $part in $parts
               return
                   if (substring-before($part, '.') eq 'part') then
@@ -527,14 +519,14 @@
     <xsl:param name="spec" as="xs:string"/>
     <xsl:param name="context" as="element()"/>
 
-    <xsl:sequence select="string-join(u:titlePrefixSegments($spec, $context),
+    <xsl:sequence select="string-join(u:titlePrefixSegments($spec, $context), 
                                       $title-prefix-separator2)"/>
   </xsl:function>
 
   <xsl:function name="u:titlePrefixSegments" as="xs:string*">
     <xsl:param name="spec" as="xs:string"/>
     <xsl:param name="context" as="element()"/>
-
+    
     <xsl:variable name="prefix" select="u:shortTitlePrefix($spec, $context)"/>
 
     <xsl:choose>
@@ -560,12 +552,12 @@
 
             <!-- Notes:
                  * Prepending "Part N, Chapter M" or "Appendix L" to
-                   a figure, table or example may be a bit redundant
+                   a figure, table or example may be a bit redundant 
                    but at least, it's crystal clear. -->
 
             <xsl:variable name="end"
                           select="for $part in $parts
-                                  return
+                                  return 
                                       if (starts-with($part, 'section1.') or
                                           starts-with($part, 'figure.') or
                                           starts-with($part, 'table.') or
@@ -575,10 +567,10 @@
                                           ()"/>
             <xsl:choose>
               <xsl:when test="$end gt 1">
-                <xsl:variable name="partRange"
+                <xsl:variable name="partRange" 
                               select="subsequence($parts, 1, $end - 1)"/>
 
-                <xsl:sequence
+                <xsl:sequence 
                   select="(u:formatSegments($partRange, $context), $prefix)"/>
               </xsl:when>
               <xsl:otherwise>
@@ -590,15 +582,15 @@
           <xsl:when test="starts-with($lastPart, 'chapter.') or
                           starts-with($lastPart, 'appendix.')">
             <!-- Prepend "Part N", if any -->
-            <xsl:variable name="firstPart"
-                          select="if (starts-with($parts[1], 'part.')) then
+            <xsl:variable name="firstPart" 
+                          select="if (starts-with($parts[1], 'part.')) then 
                                       $parts[1]
-                                  else
+                                  else 
                                       ()"/>
 
             <xsl:choose>
               <xsl:when test="exists($firstPart)">
-                <xsl:sequence
+                <xsl:sequence 
                   select="(u:formatSegments($firstPart, $context), $prefix)"/>
               </xsl:when>
               <xsl:otherwise>
@@ -623,11 +615,11 @@
     <xsl:param name="parts" as="xs:string*"/>
     <xsl:param name="context" as="element()"/>
 
-    <xsl:sequence
+    <xsl:sequence 
       select="for $part in $parts
               return
-                  concat(u:localize(substring-before($part, '.'), $context),
-                         '&#xA0;',
+                  concat(u:localize(substring-before($part, '.'), $context), 
+                         '&#xA0;', 
                          u:formatNumbers($part, $number-separator1))"/>
   </xsl:function>
 
@@ -645,7 +637,7 @@
                           $role eq 'chapter' or
                           $role eq 'appendices' or
                           $role eq 'appendix'">
-            <xsl:variable name="prefix"
+            <xsl:variable name="prefix" 
               select="u:shortTitlePrefix(string($tocEntry/@number),
                                          $tocEntry)"/>
             <xsl:choose>
@@ -661,13 +653,13 @@
           </xsl:when>
 
           <xsl:when test="$role eq 'section1'">
-            <xsl:variable name="prefix"
+            <xsl:variable name="prefix" 
               select="u:shortTitlePrefix(string($tocEntry/@number),
                                          $tocEntry)"/>
             <xsl:choose>
               <xsl:when test="$prefix ne ''">
                 <!-- Do not keep the leading 'Section' -->
-                <xsl:value-of
+                <xsl:value-of 
                   select="concat(substring-after($prefix, '&#xA0;'),
                                  $title-prefix-separator1,
                                  u:tocEntryAutoTitle($tocEntry))"/>
@@ -749,7 +741,7 @@
         <xsl:when test="contains($parent/@class,' topic/topic ')">
           <xsl:variable name="tocEntry" select="u:tocEntry($id)"/>
           <xsl:if test="exists($tocEntry)">
-            <xsl:variable name="prefix"
+            <xsl:variable name="prefix" 
                           select="u:shortTitlePrefix(string($tocEntry/@number),
                                                      $tocEntry)"/>
             <xsl:if test="$prefix ne ''">
@@ -765,7 +757,7 @@
                                 $role eq 'section8' or
                                 $role eq 'section9'">
                   <!-- Do not keep the leading 'Section' -->
-                  <xsl:value-of
+                  <xsl:value-of 
                     select="concat(substring-after($prefix, '&#xA0;'),
                                    $title-prefix-separator1)"/>
                 </xsl:when>
@@ -782,11 +774,11 @@
         </xsl:when>
 
         <xsl:when test="contains($parent/@class,' topic/fig ')">
-          <xsl:variable name="figure"
+          <xsl:variable name="figure" 
             select="$ditacLists/ditac:figureList/ditac:figure[@id eq $id]"/>
           <xsl:if test="exists($figure)">
-            <xsl:variable name="prefix"
-                          select="u:shortTitlePrefix(string($figure/@number),
+            <xsl:variable name="prefix" 
+                          select="u:shortTitlePrefix(string($figure/@number), 
                                                      $figure)"/>
             <xsl:if test="$prefix ne ''">
               <xsl:value-of select="concat($prefix,
@@ -798,10 +790,10 @@
         </xsl:when>
 
         <xsl:when test="contains($parent/@class,' topic/table ')">
-          <xsl:variable name="table"
+          <xsl:variable name="table" 
             select="$ditacLists/ditac:tableList/ditac:table[@id eq $id]"/>
           <xsl:if test="exists($table)">
-            <xsl:variable name="prefix"
+            <xsl:variable name="prefix" 
                           select="u:shortTitlePrefix(string($table/@number),
                                                      $table)"/>
             <xsl:if test="$prefix ne ''">
@@ -814,11 +806,11 @@
         </xsl:when>
 
         <xsl:when test="contains($parent/@class,' topic/example ')">
-          <xsl:variable name="example"
+          <xsl:variable name="example" 
             select="$ditacLists/ditac:exampleList/ditac:example[@id eq $id]"/>
           <xsl:if test="exists($example)">
-            <xsl:variable name="prefix"
-                          select="u:shortTitlePrefix(string($example/@number),
+            <xsl:variable name="prefix" 
+                          select="u:shortTitlePrefix(string($example/@number), 
                                                      $example)"/>
 
             <xsl:if test="$prefix ne ''">
@@ -839,20 +831,20 @@
     <xsl:variable name="id" select="u:linkTargetId(string(@href))"/>
 
     <!-- The preprocessor never generates nested topics. -->
-    <xsl:variable name="topicId"
+    <xsl:variable name="topicId" 
                   select="ancestor::*[contains(@class,' topic/topic ')]/@id"/>
     <xsl:variable name="topicEntry" select="u:tocEntry($topicId)"/>
-    <xsl:variable name="topicNumber"
-                  select="if (exists($topicEntry)) then
-                              string($topicEntry/@number)
-                          else
+    <xsl:variable name="topicNumber" 
+                  select="if (exists($topicEntry)) then 
+                              string($topicEntry/@number) 
+                          else 
                               ''"/>
 
     <xsl:if test="$id ne ''">
       <xsl:variable name="tocEntry" select="u:tocEntry($id)"/>
       <xsl:choose>
         <xsl:when test="exists($tocEntry)">
-          <xsl:variable name="prefix"
+          <xsl:variable name="prefix" 
             select="u:relativeTitlePrefix(string($tocEntry/@number),
                                           $topicNumber,
                                           $tocEntry)"/>
@@ -863,11 +855,11 @@
         </xsl:when>
 
         <xsl:otherwise>
-          <xsl:variable name="figure"
+          <xsl:variable name="figure" 
             select="$ditacLists/ditac:figureList/ditac:figure[@id eq $id]"/>
           <xsl:choose>
             <xsl:when test="exists($figure)">
-              <xsl:variable name="prefix"
+              <xsl:variable name="prefix" 
                 select="u:relativeTitlePrefix(string($figure/@number),
                                               $topicNumber,
                                               $figure)"/>
@@ -878,11 +870,11 @@
             </xsl:when>
 
             <xsl:otherwise>
-              <xsl:variable name="table"
+              <xsl:variable name="table" 
                 select="$ditacLists/ditac:tableList/ditac:table[@id eq $id]"/>
               <xsl:choose>
                 <xsl:when test="exists($table)">
-                  <xsl:variable name="prefix"
+                  <xsl:variable name="prefix" 
                     select="u:relativeTitlePrefix(string($table/@number),
                                                   $topicNumber,
                                                   $table)"/>
@@ -893,10 +885,10 @@
                 </xsl:when>
 
                 <xsl:otherwise>
-                  <xsl:variable name="example"
+                  <xsl:variable name="example" 
                     select="$ditacLists/ditac:exampleList/ditac:example[@id eq $id]"/>
                   <xsl:if test="exists($example)">
-                    <xsl:variable name="prefix"
+                    <xsl:variable name="prefix" 
                       select="u:relativeTitlePrefix(string($example/@number),
                                                     $topicNumber,
                                                     $example)"/>
@@ -918,7 +910,7 @@
     <xsl:param name="href" as="xs:string"/>
 
     <!-- The preprocessor always appends #flat_id to local links. -->
-    <xsl:sequence select="if (contains($href, '#') and
+    <xsl:sequence select="if (contains($href, '#') and 
                               not(contains($href, '/'))) then
                               URI:decodeURI(substring-after($href, '#'))
                           else
@@ -929,10 +921,10 @@
     <xsl:param name="spec" as="xs:string"/>
     <xsl:param name="baseSpec" as="xs:string"/>
     <xsl:param name="context" as="element()"/>
-
+    
     <xsl:choose>
       <xsl:when test="$baseSpec ne ''">
-        <xsl:variable name="prefix"
+        <xsl:variable name="prefix" 
                       select="u:shortTitlePrefix($spec, $context)"/>
 
         <xsl:choose>
@@ -940,12 +932,12 @@
             <xsl:variable name="parts1" select="u:splitSpec($spec)"/>
             <xsl:variable name="parts2" select="u:splitSpec($baseSpec)"/>
 
-            <xsl:variable name="commonList"
+            <xsl:variable name="commonList" 
               select="for $p1 in $parts1, $p2 in $parts2
                       return
                           if ($p1 eq $p2 and
                               (starts-with($p1, 'part.') or
-                               starts-with($p1, 'chapter.') or
+                               starts-with($p1, 'chapter.') or 
                                starts-with($p1, 'appendix.'))) then
                               $p1
                           else
@@ -953,7 +945,7 @@
             <xsl:variable name="common" select="$commonList[last()]"/>
 
             <xsl:choose>
-              <xsl:when test="starts-with($common, 'chapter.') or
+              <xsl:when test="starts-with($common, 'chapter.') or 
                               starts-with($common, 'appendix.')">
                 <!-- It is OK if spec and baseSpec are the same chapter or
                      appendix. -->
@@ -971,8 +963,8 @@
                   <xsl:otherwise>
                     <xsl:variable name="longPrefix"
                                   select="u:longTitlePrefix($spec, $context)"/>
-                    <xsl:sequence
-                        select="substring-after($longPrefix,
+                    <xsl:sequence 
+                        select="substring-after($longPrefix, 
                                                 $title-prefix-separator2)"/>
                   </xsl:otherwise>
                 </xsl:choose>
@@ -1003,7 +995,7 @@
   <!-- ===================================================================
        About flaggableBlockElements: these elements are the children of body.
        Notes:
-       * parml specializes dl
+       * parml specializes dl 
        * codeblock, msgblock, screen specialize pre
        * syntaxdiagram, imagemap specialize fig
        * image, foreign, data, data-about, etc, are considered to be inline
@@ -1015,34 +1007,34 @@
        * Element fn is neither an inline or a block.
        =================================================================== -->
 
-  <xsl:variable name="flaggableBlockElements"
-                select="'topic/topic',
-                        'topic/p',
-                        'topic/lq',
-                        'topic/note',
-                        'topic/dl',
-                        'topic/ul',
-                        'topic/ol',
-                        'topic/sl',
-                        'topic/pre',
-                        'topic/lines',
-                        'topic/fig',
-                        'topic/object',
-                        'topic/table',
-                        'topic/simpletable',
-                        'topic/section',
+  <xsl:variable name="flaggableBlockElements" 
+                select="'topic/topic', 
+                        'topic/p', 
+                        'topic/lq', 
+                        'topic/note', 
+                        'topic/dl', 
+                        'topic/ul', 
+                        'topic/ol', 
+                        'topic/sl', 
+                        'topic/pre', 
+                        'topic/lines', 
+                        'topic/fig', 
+                        'topic/object', 
+                        'topic/table', 
+                        'topic/simpletable', 
+                        'topic/section', 
                         'topic/example'"/>
-  <xsl:variable name="flaggableInlineElements"
+  <xsl:variable name="flaggableInlineElements" 
                 select="'topic/ph',
-                        'topic/term',
-                        'topic/xref',
-                        'topic/cite',
-                        'topic/q',
-                        'topic/boolean',
-                        'topic/state',
-                        'topic/keyword',
-                        'topic/tm',
-                        'topic/image',
+                        'topic/term', 
+                        'topic/xref', 
+                        'topic/cite', 
+                        'topic/q', 
+                        'topic/boolean', 
+                        'topic/state', 
+                        'topic/keyword', 
+                        'topic/tm', 
+                        'topic/image', 
                         'topic/foreign'"/>
 
   <xsl:function name="u:canFlag" as="xs:integer">
@@ -1066,7 +1058,7 @@
     <xsl:param name="list1" as="xs:string*"/>
     <xsl:param name="list2" as="xs:string*"/>
 
-    <xsl:variable name="result" select="for $item2 in $list2
+    <xsl:variable name="result" select="for $item2 in $list2 
                                         return index-of($list1, $item2)"/>
     <xsl:choose>
       <xsl:when test="empty($result)">
@@ -1079,3 +1071,4 @@
   </xsl:function>
 
 </xsl:stylesheet>
+

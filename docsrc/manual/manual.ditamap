@@ -93,6 +93,10 @@
       <revised golive="2013-10-29" modified="2013-10-28"/>
 
       <revised golive="2014-02-12" modified="2013-11-13"/>
+
+      <revised golive="2014-07-02" modified="2014-02-23"/>
+
+      <revised golive="2014-09-17" modified="2014-09-07"/>
     </critdates>
   </bookmeta>
 
@@ -121,7 +125,9 @@
 
     <chapter chunk="to-content" href="commandLine.dita"/>
 
-    <chapter chunk="to-content" href="xsltParams.dita"/>
+    <chapter chunk="to-content" href="xsltParams.dita">
+      <topicref chunk="to-content" href="pageHeaderFooter.dita"/>
+    </chapter>
 
     <chapter chunk="to-content" href="olNumbering.dita"/>
 

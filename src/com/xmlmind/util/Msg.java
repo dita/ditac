@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2008 Pixware. 
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved. 
  *
  * Author: Hussein Shafie
  *

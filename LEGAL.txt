@@ -15,7 +15,7 @@
     * docsrc/
 
   You may not use these files except in compliance with the License. You'll
-  find this License in LEGAL/MPL-1.1.html or in http://www.mozilla.org/MPL/.
+  find this License in LEGAL/MPL-2.0.html or in http://www.mozilla.org/MPL/2.0/.
 
   Software distributed under the License is distributed on an "AS IS" basis,
   WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
@@ -23,7 +23,7 @@
 
   The Original Code consists of the files listed above.
 
-  The Initial Developer of the Original Code is Pixware SARL.
+  The Initial Developer of the Original Code is Pixware SARL. 
 
   By downloading, modifying, distributing, using and/or accessing any files in
   this directory, you agree to the terms and conditions of the applicable
@@ -46,13 +46,3 @@
 
       [<component_name>.LICENSE] a text or HTML file containing the license
           attached to the component.
-
-  Some icons come from the FatCow icon set
-  (http://www.fatcow.com/free-icons). Many thanks to FatCow
-  for making these very nice icons freely available.
-  More information in LEGAL/fatcow-icons.README.
-
-  Some icons come from the famfamfam.com's Silk icon set
-  (http://www.famfamfam.com/lab/icons/silk/). Many thanks to Mark James
-  for making these very nice icons freely available.
-  More information in LEGAL/famfamfam-icons.README.

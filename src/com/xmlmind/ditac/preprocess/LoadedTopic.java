@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2011 Pixware SARL. All rights reserved.
+ * Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -22,7 +22,8 @@ public final class LoadedTopic {
     public final Element element;
     public final Object parent;
     public String topicId;
-    public final LoadedTopic[] topics;
+
+    private LoadedTopic[] nestedTopics;
 
     private boolean excluded;
 
@@ -35,7 +36,20 @@ public final class LoadedTopic {
         // This may change the value of @id. Therefore topicId and @id
         // are initially in sync.
         topicId = DITAUtil.ensureHasValidID(element, console);
+    }
 
+    public LoadedTopic[] getNestedTopics() {
+        return getNestedTopics(null);
+    }
+
+    public LoadedTopic[] getNestedTopics(ConsoleHelper console) {
+        if (nestedTopics == null) {
+            nestedTopics = nestedTopics(console);
+        }
+        return nestedTopics;
+    }
+
+    public LoadedTopic[] nestedTopics(ConsoleHelper console) {
         ArrayList<LoadedTopic> list = new ArrayList<LoadedTopic>();
 
         Node child = element.getFirstChild();
@@ -50,8 +64,10 @@ public final class LoadedTopic {
             child = child.getNextSibling();
         }
 
-        topics = new LoadedTopic[list.size()];
-        list.toArray(topics);
+        LoadedTopic[] nestedTopics = new LoadedTopic[list.size()];
+        list.toArray(nestedTopics);
+
+        return nestedTopics;
     }
 
     public void setExcluded(boolean exclude) {
@@ -90,6 +106,7 @@ public final class LoadedTopic {
         return location + "#" + URIComponent.quoteFragment(topicId);
     }
 
+    @Override
     public String toString() {
         return getHref();
     }

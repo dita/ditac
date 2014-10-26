@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2011 Pixware SARL. All rights reserved.
+ * Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -145,7 +145,7 @@ public class LoadedDocument {
 
         LoadedTopic singleTopic = loadedTopics[0];
 
-        LoadedTopic[] nestedTopics = singleTopic.topics;
+        LoadedTopic[] nestedTopics = singleTopic.getNestedTopics();
         if (nestedTopics != null && nestedTopics.length > 0) {
             singleTopic = null;
         }
@@ -171,7 +171,7 @@ public class LoadedDocument {
                 return loadedTopic;
             }
 
-            LoadedTopic[] nestedTopics = loadedTopic.topics;
+            LoadedTopic[] nestedTopics = loadedTopic.getNestedTopics();
             if (nestedTopics != null && nestedTopics.length > 0) {
                 LoadedTopic found = findTopicById(nestedTopics, id);
                 if (found != null) {
@@ -182,6 +182,7 @@ public class LoadedDocument {
         return null;
     }
 
+    @Override
     public String toString() {
         return url.toExternalForm();
     }

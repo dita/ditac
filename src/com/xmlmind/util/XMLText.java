@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2013 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -609,10 +609,12 @@ public final class XMLText {
      */
     public static String[] splitList(String s) {
         StringTokenizer tokens = new StringTokenizer(s, " \n\r\t");
-        String[] split = new String[tokens.countTokens()];
+        final int count = tokens.countTokens();
+        String[] split = new String[count];
 
-        for (int i = 0; i < split.length; ++i)
+        for (int i = 0; i < count; ++i) {
             split[i] = tokens.nextToken();
+        }
 
         return split;
     }

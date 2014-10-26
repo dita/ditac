@@ -1,11 +1,11 @@
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><title>Syntax highlighting</title><link rel="stylesheet" type="text/css" href="resources/basic.css"></link><meta name="description" content="This chapter explains how you can automatically colorize the source code contained in pre, codeblock or any other element specializing pre."></meta><meta name="generator" content="XMLmind DITA Converter 2.5.1"></meta></head><body><div id="syntaxHighlighting" class="topic"><h2 class="chapter-title">Syntax highlighting</h2><p class="shortdesc">This chapter explains how you can automatically colorize the
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><title>Syntax highlighting</title><link rel="stylesheet" type="text/css" href="resources/basic.css"></link><meta name="description" content="This chapter explains how you can automatically colorize the source code contained in pre, codeblock or any other element specializing pre."></meta><meta name="generator" content="XMLmind DITA Converter 2.5.3"></meta></head><body><div id="syntaxHighlighting" class="topic"><h2 class="chapter-title">Syntax highlighting</h2><p class="shortdesc">This chapter explains how you can automatically colorize the
   source code contained in <tt class="tt">pre</tt>, <tt class="tt">codeblock</tt> or any other
   element specializing <tt class="tt">pre</tt>.</p><div class="body"><div class="p">You can automatically colorize the source code contained in
     <tt class="tt">pre</tt>, <tt class="tt">codeblock</tt> or any other element specializing
     <tt class="tt">pre</tt>. This feature, commonly called <dfn class="term">syntax
     highlighting</dfn>, has been implemented using an open source software
     component called "<a href="http://sourceforge.net/apps/mediawiki/xslthl/" class="xref" target="_blank">XSLT
-    syntax highlighting <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a>".<a id="syntaxHighlighting__I_fmd6b2_" name="syntaxHighlighting__I_fmd6b2_"></a></div><div class="p">If you want to turn on syntax highlighting in a DITA document, suffice
+    syntax highlighting <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a>".<a id="syntaxHighlighting__I_7tptow_" name="syntaxHighlighting__I_7tptow_"></a></div><div class="p">If you want to turn on syntax highlighting in a DITA document, suffice
     to add attribute <tt class="tt">outputclass</tt> to a <tt class="tt">pre</tt>,
     <tt class="tt">codeblock</tt> or any other element specializing <tt class="tt">pre</tt>. The
     value of attribute <tt class="tt">outputclass</tt> must be any of:
@@ -19,7 +19,7 @@
       javadoc, or xmldoc),</li><li class="li"><tt class="tt">.hl-directive</tt> (preprocessor directive or in XML, a
       processing-instruction),</li><li class="li"><tt class="tt">.hl-annotation</tt> (annotations or "attributes" as they are
       called in .NET),</li><li class="li"><tt class="tt">.hl-tag</tt> (XML tag, i.e. element name),</li><li class="li"><tt class="tt">.hl-attribute</tt> (XML attribute name),</li><li class="li"><tt class="tt">.hl-value</tt> (XML attribute value),</li><li class="li"><tt class="tt">.hl-doctype</tt> (<tt class="tt">&lt;!DOCTYPE&gt;</tt>and all its
-      content).</li></ul><div id="syntaxHighlighting__I_7d64pb_" class="example"><h3 class="example-title">Customization of the syntax highlighting of a keyword for
+      content).</li></ul><div id="syntaxHighlighting__I_acqtzq_" class="example"><h3 class="example-title">Customization of the syntax highlighting of a keyword for
     HTML-based output formats</h3><pre class="pre">.hl-keyword {
     font-weight: bold;
     color: #602060;
@@ -28,7 +28,7 @@
     <tt class="tt">attribute-set</tt>s: <tt class="tt">hl-keyword</tt>, <tt class="tt">hl-string</tt>,
     <tt class="tt">hl-number</tt>, <tt class="tt">hl-comment</tt>, <tt class="tt">hl-doccomment</tt>,
     <tt class="tt">hl-directive</tt>, <tt class="tt">hl-annotation</tt>, <tt class="tt">hl-tag</tt>,
-    <tt class="tt">hl-attribute</tt>, <tt class="tt">hl-value</tt>, <tt class="tt">hl-doctype</tt>.</div><div id="syntaxHighlighting__I_1wmiju_" class="example"><h3 class="example-title">Customization of the syntax highlighting of a keyword for
+    <tt class="tt">hl-attribute</tt>, <tt class="tt">hl-value</tt>, <tt class="tt">hl-doctype</tt>.</div><div id="syntaxHighlighting__I_c75yde_" class="example"><h3 class="example-title">Customization of the syntax highlighting of a keyword for
     XSL-FO-based output formats</h3><pre class="pre language-xml"><span class="hl-tag">&lt;xsl:attribute-set</span> <span class="hl-attribute">name</span>=<span class="hl-value">"hl-keyword"</span> <span class="hl-attribute">use-attribute-sets</span>=<span class="hl-value">"hl-style"</span><span class="hl-tag">&gt;</span>
   <span class="hl-tag">&lt;xsl:attribute</span> <span class="hl-attribute">name</span>=<span class="hl-value">"font-weight"</span><span class="hl-tag">&gt;</span>bold<span class="hl-tag">&lt;/xsl:attribute&gt;</span>
   <span class="hl-tag">&lt;xsl:attribute</span> <span class="hl-attribute">name</span>=<span class="hl-value">"color"</span><span class="hl-tag">&gt;</span>#602060<span class="hl-tag">&lt;/xsl:attribute&gt;</span>

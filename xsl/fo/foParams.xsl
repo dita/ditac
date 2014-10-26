@@ -75,10 +75,15 @@
 
   <!-- Do not redefine unless you change the files found in
        $xsl-resources-directory. -->
-  <xsl:param name="note-icon-suffix" select="'.png'"/>
-  <!-- A dimension may have a unit. Default is px. -->
-  <xsl:param name="note-icon-width" select="'7mm'"/>
-  <xsl:param name="note-icon-height" select="'7mm'"/>
+  <xsl:param name="note-icon-suffix" select="'.svg'"/>
+  <!-- A dimension may have a unit. Default is px. 
+       (32px at 96DPI gives 0.333in) -->
+  <xsl:param name="note-icon-width" select="'0.333in'"/>
+  <xsl:param name="note-icon-height" select="'0.333in'"/>
+
+  <xsl:param name="media-icon-suffix" select="'.svg'"/>
+  <xsl:param name="media-icon-width" select="'0.167in'"/>
+  <xsl:param name="media-icon-height" select="'0.167in'"/>
 
   <xsl:param name="pdf-outline" select="'no'"/>
 

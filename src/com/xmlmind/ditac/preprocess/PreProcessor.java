@@ -68,7 +68,7 @@ public class PreProcessor implements Constants {
     /**
      * The version number of this PreProcessor.
      */
-    public static final String VERSION = "2.5.1";
+    public static final String VERSION = "2.5.3";
 
     /**
      * Specifies that a <tt>&lt;toc&gt;</tt> is to be added 
@@ -814,9 +814,9 @@ public class PreProcessor implements Constants {
 
                         language = DOMUtil.getXMLLang(loadedTopic.element);
                         if (language == null) {
-                            LoadedTopic[] nestedTopics = loadedTopic.topics;
-                            if (nestedTopics != null && 
-                                nestedTopics.length > 0) {
+                            LoadedTopic[] nestedTopics = 
+                                loadedTopic.nestedTopics(null);
+                            if (nestedTopics.length > 0) {
                                 language = findLanguage(nestedTopics);
                             }
                         }
@@ -845,8 +845,8 @@ public class PreProcessor implements Constants {
         }
 
         for (int i = 0; i < count; ++i) {
-            LoadedTopic[] nestedTopics = loadedTopics[i].topics;
-            if (nestedTopics != null && nestedTopics.length > 0) {
+            LoadedTopic[] nestedTopics = loadedTopics[i].nestedTopics(null);
+            if (nestedTopics.length > 0) {
                 String language = findLanguage(nestedTopics);
                 if (language != null) {
                     return language;
@@ -1199,16 +1199,14 @@ public class PreProcessor implements Constants {
         return topics;
     }
 
-    protected static void addNestedTopics(LoadedTopic loadedTopic, 
-                                          List<LoadedTopic> topicList) {
-        LoadedTopic[] nestedTopics = loadedTopic.topics;
-        if (nestedTopics != null) {
-            for (int i = 0; i < nestedTopics.length; ++i) {
-                LoadedTopic nestedTopic = nestedTopics[i];
+    protected void addNestedTopics(LoadedTopic loadedTopic, 
+                                   List<LoadedTopic> topicList) {
+        LoadedTopic[] nestedTopics = loadedTopic.getNestedTopics(console);
+        for (int i = 0; i < nestedTopics.length; ++i) {
+            LoadedTopic nestedTopic = nestedTopics[i];
 
-                topicList.add(nestedTopic);
-                addNestedTopics(nestedTopic, topicList);
-            }
+            topicList.add(nestedTopic);
+            addNestedTopics(nestedTopic, topicList);
         }
     }
 

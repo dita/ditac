@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2011 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -54,16 +54,19 @@ public final class URIComponent {
      * specified path does not contain the '/' character
      */
     public static String getRawParentPath(String path, boolean trailingSlash) {
-        if ("/".equals(path))
+        if ("/".equals(path)) {
             return null;
+        }
 
         // Normalize "/foo/bar/" to "/foo/bar".
-        if (path.endsWith("/"))
+        if (path.endsWith("/")) {
             path = path.substring(0, path.length()-1);
+        }
 
         int slash = path.lastIndexOf('/');
-        if (slash < 0)
+        if (slash < 0) {
             return null;
+        }
 
         if (slash == 0) {
             // Example: "/foo"
@@ -97,16 +100,19 @@ public final class URIComponent {
      * @return base name of specified path
      */
     public static String getRawBaseName(String path) {
-        if ("/".equals(path))
+        if ("/".equals(path)) {
             return "";
+        }
 
         // Normalize "/foo/bar/" to "/foo/bar".
-        if (path.endsWith("/"))
+        if (path.endsWith("/")) {
             path = path.substring(0, path.length()-1);
+        }
 
         int slash = path.lastIndexOf('/');
-        if (slash < 0)
+        if (slash < 0) {
             return path;
+        }
 
         return path.substring(slash+1);
     }
@@ -135,10 +141,11 @@ public final class URIComponent {
      */
     public static String getRawExtension(String path) {
         int dot = FileUtil.indexOfDot(path, '/');
-        if (dot < 0)
+        if (dot < 0) {
             return null;
-        else
+        } else {
             return path.substring(dot+1);
+        }
     }
 
     /**
@@ -146,8 +153,9 @@ public final class URIComponent {
      * quoted using {@link #quotePath}.
      */
     public static String setExtension(String path, String extension) {
-        if (extension != null)
+        if (extension != null) {
             extension = quotePath(extension);
+        }
         return setRawExtension(path, extension);
     }
 
@@ -164,20 +172,23 @@ public final class URIComponent {
      * <p>Returns same path if specified path ends with '/'.
      */
     public static String setRawExtension(String path, String extension) {
-        if (path.endsWith("/"))
+        if (path.endsWith("/")) {
             return path;
+        }
 
         int dot = FileUtil.indexOfDot(path, '/');
         if (dot < 0) {
-            if (extension == null)
+            if (extension == null) {
                 return path;
-            else
+            } else {
                 return path + "." + extension;
+            }
         } else {
-            if (extension == null)
+            if (extension == null) {
                 return path.substring(0, dot);
-            else
+            } else {
                 return path.substring(0, dot+1) + extension;
+            }
         }
     }
 
@@ -220,10 +231,11 @@ public final class URIComponent {
     public static String getRawFragment(String location) {
         // The fragment is the very last component of an URI.
         int pos = location.lastIndexOf('#');
-        if (pos < 0)
+        if (pos < 0) {
             return null;
-        else
+        } else {
             return location.substring(pos+1);
+        }
     }
 
     /**
@@ -231,8 +243,9 @@ public final class URIComponent {
      * quoted using {@link #quoteFragment}.
      */
     public static String setFragment(String location, String fragment) {
-        if (fragment != null)
+        if (fragment != null) {
             fragment = quoteFragment(fragment);
+        }
         return setRawFragment(location, fragment);
     }
 
@@ -250,15 +263,17 @@ public final class URIComponent {
     public static String setRawFragment(String location, String fragment) {
         int pos = location.lastIndexOf('#');
         if (pos < 0) {
-            if (fragment == null)
+            if (fragment == null) {
                 return location;
-            else
+            } else {
                 return location + "#" + fragment;
+            }
         } else {
-            if (fragment == null)
+            if (fragment == null) {
                 return location.substring(0, pos);
-            else
+            } else {
                 return location.substring(0, pos+1) + fragment;
+            }
         }
     }
 
@@ -314,17 +329,21 @@ public final class URIComponent {
      * path as is, if the relative path cannot be computed.
      */
     public static String getRawRelativePath(String path, String basePath) {
-        if (!path.startsWith("/") || !basePath.startsWith("/"))
+        if (!path.startsWith("/") || !basePath.startsWith("/")) {
             return path;
+        }
 
-        if ("/".equals(path)) 
+        if ("/".equals(path)) {
             return "/";
+        }
 
-        if ("/".equals(basePath))
+        if ("/".equals(basePath)) {
             return path.substring(1);
+        }
 
-        if (!basePath.endsWith("/"))
+        if (!basePath.endsWith("/")) {
             basePath = getRawParentPath(basePath, true);
+        }
 
         StringBuilder buffer = new StringBuilder();
 
@@ -472,8 +491,9 @@ public final class URIComponent {
             }
         }
 
-        if (path != null)
+        if (path != null) {
             buffer.append(path);
+        }
 
         if (query != null && query.length() > 0) {
             buffer.append('?');
@@ -550,15 +570,18 @@ public final class URIComponent {
      * path to specified buffer.
      */
     public static void quoteFullPath(String path, StringBuilder buffer) {
-        String[] segments = StringUtil.split(path, '/');
-        for (int i = 0; i < segments.length; ++i) {
+        final String[] segments = StringUtil.split(path, '/');
+        final int segmentCount = segments.length;
+        for (int i = 0; i < segmentCount; ++i) {
             String segment = segments[i];
 
-            if (i > 0) 
+            if (i > 0) {
                 buffer.append('/');
+            }
 
-            if (segment.length() > 0)
+            if (segment.length() > 0) {
                 buffer.append(quotePath(segment));
+            }
         }
     }
 
@@ -617,7 +640,7 @@ public final class URIComponent {
      * characters (to make it simple).
      * <li><tt>decode</tt> replaces <em>all</em> <tt>%<i>HH</i></tt> 
      * sequences by the corresponding characters.
-     * <ul>
+     * </ul>
      *
      * @param s string to be decoded
      * @param charset the encoding used for characters in the <i>other</i>
@@ -630,10 +653,11 @@ public final class URIComponent {
      * is an unsupported encoding
      */
     public static String decode(String s, String charset) {
-        if (s.indexOf('%') < 0)
+        if (s.indexOf('%') < 0) {
             return s;
+        }
 
-        byte[] srcBytes;
+        final byte[] srcBytes;
         try {
             srcBytes = s.getBytes(charset);
         } catch (UnsupportedEncodingException shouldNotHappen) {
@@ -641,7 +665,7 @@ public final class URIComponent {
             return null;
         }
 
-        int srcByteCount = srcBytes.length;
+        final int srcByteCount = srcBytes.length;
         byte[] dstBytes = new byte[srcByteCount];
         int j = 0;
 
@@ -679,10 +703,11 @@ public final class URIComponent {
     };
 
     private static final int fromHexDigit(int c) {
-        if (c < '0' || c > 'f')
+        if (c < '0' || c > 'f') {
             return -1;
-        else
+        } else {
             return fromHexDigit[c - '0'];
+        }
     }
 
     // -----------------------------------------------------------------------
@@ -707,7 +732,7 @@ public final class URIComponent {
      * characters (to make it simple).
      * <li><tt>decode</tt> replaces <em>all</em> <tt>%<i>HH</i></tt> 
      * sequences by the corresponding characters.
-     * <ul>
+     * </ul>
      *
      * @param s string to be encode
      * @param charset the encoding used for the aforementioned 
@@ -720,7 +745,7 @@ public final class URIComponent {
     public static String encode(String s, String charset) {
         StringBuilder buffer = new StringBuilder();
 
-        int length = s.length();
+        final int length = s.length();
         for (int i = 0; i < length; ++i) {
             char c = s.charAt(i);
 
@@ -729,7 +754,7 @@ public final class URIComponent {
                 !Character.isISOControl(c)) {
                 buffer.append(c);
             } else {
-                byte[] bytes;
+                final byte[] bytes;
                 try {
                     bytes = (Character.toString(c)).getBytes(charset);
                 } catch (UnsupportedEncodingException shouldNothappen) {
@@ -737,12 +762,14 @@ public final class URIComponent {
                     return null;
                 }
 
-                for (int j = 0; j < bytes.length; ++j) {
+                final int byteCount = bytes.length;
+                for (int j = 0; j < byteCount; ++j) {
                     String hex = Integer.toHexString(bytes[j] & 0xFF);
 
                     buffer.append('%');
-                    if (hex.length() == 1)
+                    if (hex.length() == 1) {
                         buffer.append('0');
+                    }
                     buffer.append(hex.toUpperCase());
                 }
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2011 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -28,6 +28,7 @@ import java.util.Iterator;
  * modification.
  * <p>This class is <em>not</em> thread-safe.
  */
+@SuppressWarnings("unchecked")
 public class LinearHashtable<K,V> implements Cloneable, Serializable {
     protected transient Object[] table;
 

@@ -1,10 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><title>Rich media content</title><link rel="stylesheet" type="text/css" href="resources/basic.css"></link><meta name="description" content="This chapter explains how to add SVG, MathML, audio, video and Flash animations to your DITA topics and how ditac processes this rich media content in the case where the output format supports rich media (e.g. XHTML&nbsp;5, EPUB&nbsp;3) and also in the case where the output format does not support rich media (e.g. XHTML&nbsp;1, PDF, RTF)."></meta><meta name="generator" content="XMLmind DITA Converter 2.5.1"></meta></head><body><div id="media" class="concept"><h2 class="chapter-title">Rich media content</h2><div class="abstract"><p class="shortdesc">This chapter explains how to add SVG, MathML, audio,
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><title>Rich media content</title><link rel="stylesheet" type="text/css" href="resources/basic.css"></link><meta name="description" content="This chapter explains how to add SVG, MathML, audio, video and Flash animations to your DITA topics and how ditac processes this rich media content in the case where the output format supports rich media (e.g. XHTML&nbsp;5, EPUB&nbsp;3) and also in the case where the output format does not support rich media (e.g. XHTML&nbsp;1, PDF, RTF)."></meta><meta name="generator" content="XMLmind DITA Converter 2.5.3"></meta></head><body><div id="media" class="concept"><h2 class="chapter-title">Rich media content</h2><div class="abstract"><p class="shortdesc">This chapter explains how to add SVG, MathML, audio,
   video and Flash animations to your DITA topics and how
   <code class="cmdname">ditac</code> processes this rich media content in the case where
   the output format supports rich media (e.g. XHTML&nbsp;5, EPUB&nbsp;3) and also in the
   case where the output format does not support rich media (e.g. XHTML&nbsp;1, PDF,
   RTF).</p></div><div class="conbody"><div id="media__svg" class="section"><h3 class="section-title">SVG</h3><div class="p">It is possible to include SVG
-    graphics<a id="media__I_he9sf0_" name="media__I_he9sf0_"></a> in a DITA topic either by reference or
+    graphics<a id="media__I_rnmlkv_" name="media__I_rnmlkv_"></a> in a DITA topic either by reference or
     by inclusion. Use an <tt class="tt">image</tt> element pointing to an SVG file to
     include it by reference. Example:</div><div class="p"><img src="images/graphic.svg" class="image" alt="graphic.svg"></img></div><div class="p">The XML source code corresponding to the
     above example is:</div><pre class="pre language-xml"><span class="hl-tag">&lt;p&gt;</span><span class="hl-tag">&lt;image</span> <span class="hl-attribute">href</span>=<span class="hl-value">"media/graphic.svg"</span><span class="hl-tag">/&gt;</span><span class="hl-tag">&lt;/p&gt;</span></pre><div class="p">Embed
@@ -57,14 +57,14 @@
         <tt class="tt">image</tt> element has useful attributes (<tt class="tt">width</tt>,
         <tt class="tt">height</tt>, <tt class="tt">scale</tt>, <tt class="tt">scalefit</tt>) allowing to adjust
         the dimension of the image.</li><li class="li">Only the following screen formats may contain SVG:
-        XHTML&nbsp;5<a id="media__I_khtc5l_" name="media__I_khtc5l_"></a>, XHTML&nbsp;5 Web
-        Help<a id="media__I_s8fvup_" name="media__I_s8fvup_"></a> and
-        EPUB&nbsp;3<a id="media__I_ex1haw_" name="media__I_ex1haw_"></a>. Note that only
+        XHTML&nbsp;5<a id="media__I_3rrihv_" name="media__I_3rrihv_"></a>, XHTML&nbsp;5 Web
+        Help<a id="media__I_nhn825_" name="media__I_nhn825_"></a> and
+        EPUB&nbsp;3<a id="media__I_91awdj_" name="media__I_91awdj_"></a>. Note that only
         modern web browsers support XHTML&nbsp;5 and XHTML&nbsp;5 Web Help. Very few
         EPUB readers (e.g. iBooks) support EPUB&nbsp;3.</li><li class="li">All XSL-FO based formats support SVG whatever the XSL-FO processor
         you may use.</li></ul></div><div id="media__mathml" class="section"><h3 class="section-title">MathML</h3><div class="p">Embed the <tt class="tt">mml:math</tt>
     element in a <tt class="tt">foreign</tt> element (or any element specializing
-    <tt class="tt">foreign</tt>) to add math<a id="media__I_lmocpp_" name="media__I_lmocpp_"></a> to your DITA
+    <tt class="tt">foreign</tt>) to add math<a id="media__I_ovhrdy_" name="media__I_ovhrdy_"></a> to your DITA
     topics. Example:</div><div class="p"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
         <mrow>
           <mo>{</mo>
@@ -203,9 +203,9 @@
     <span class="hl-tag">&lt;/mml:mtable&gt;</span>
   <span class="hl-tag">&lt;/mml:mrow&gt;</span>
 <span class="hl-tag">&lt;/mml:math&gt;</span><span class="hl-tag">&lt;/foreign&gt;</span><span class="hl-tag">&lt;/p&gt;</span></pre><ul class="ul"><li class="li">Only the following screen formats may contain MathML:
-        XHTML&nbsp;5<a id="media__I_th1vr6_" name="media__I_th1vr6_"></a>, XHTML&nbsp;5 Web
-        Help<a id="media__I_u0po09_" name="media__I_u0po09_"></a> and
-        EPUB&nbsp;3<a id="media__I_abth25_" name="media__I_abth25_"></a>. Most modern web
+        XHTML&nbsp;5<a id="media__I_a2b31l_" name="media__I_a2b31l_"></a>, XHTML&nbsp;5 Web
+        Help<a id="media__I_mvrknt_" name="media__I_mvrknt_"></a> and
+        EPUB&nbsp;3<a id="media__I_mye3x7_" name="media__I_mye3x7_"></a>. Most modern web
         browsers (Firefox, Chrome) support XHTML&nbsp;5 and XHTML&nbsp;5 Web Help
         containing MathML. Very few EPUB readers (e.g. iBooks) support
         EPUB&nbsp;3.</li><li class="li">XSL-FO based formats support MathML dependin g on the XSL-FO
@@ -213,7 +213,7 @@
             install the the <a href="http://jeuclid.sourceforge.net/jeuclid-fop/index.html" class="xref" target="_blank">JEuclid FOP plug-in <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a>.</li><li class="li"><a href="http://www.renderx.com/tools/xep.html" class="xref" target="_blank">RenderX XEP <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a> does not support MathML.</li><li class="li"><a href="http://www.antennahouse.com/" class="xref" target="_blank">Antenna House Formatter <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a> supports MathML as
             an option.</li><li class="li"><a href="http://www.xmlmind.com/foconverter/" class="xref" target="_blank">XMLmind XSL-FO Converter <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a> supports MathML
             out of the box.</li></ul></li></ul></div><div id="media__audio" class="section"><h3 class="section-title">Audio</h3><div class="p">Use the <tt class="tt">object</tt> DITA
-    element to add audio<a id="media__I_i3hyto_" name="media__I_i3hyto_"></a> to your DITA topics.
+    element to add audio<a id="media__I_ni2op_" name="media__I_ni2op_"></a> to your DITA topics.
     Example:</div><div class="p"><div class="object-auto-fallback"><a href="images/audio.mp3" target="_blank" class="object-download-link"><img src="resources/play.png" alt="audio.mp3" border="0"></img> audio.mp3 (audio/mpeg)</a></div></div><div class="p">The XML source code corresponding to the above example
     is:</div><pre class="pre language-xml"><span class="hl-tag">&lt;p&gt;</span><span class="hl-tag">&lt;object</span> <span class="hl-attribute">data</span>=<span class="hl-value">"media/audio.mp3"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"audio/mpeg"</span><span class="hl-tag">&gt;</span>
      <span class="hl-tag">&lt;param</span> <span class="hl-attribute">name</span>=<span class="hl-value">"source.src"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"media/audio.ogg"</span><span class="hl-tag">/&gt;</span>
@@ -255,7 +255,7 @@
         automatically generated by ditac. This automatic fallback content
         basically consists in a link allowing to download the audio file.</li><li class="li">When ditac is used to generate an XSL-FO based format (PDF, RTF,
         etc), only the fallback content appears in the ouput file.</li></ul></div><div id="media__video" class="section"><h3 class="section-title">Video</h3><div class="p">Use the <tt class="tt">object</tt> DITA
-    element to add video<a id="media__I_c64pje_" name="media__I_c64pje_"></a> to your DITA topics.
+    element to add video<a id="media__I_b5kypd_" name="media__I_b5kypd_"></a> to your DITA topics.
     Example:</div><div class="p"><div class="object-auto-fallback"><a href="images/video.mp4" target="_blank" class="object-download-link"><img src="images/video_poster.jpg" alt="video.mp4" width="128" border="0"></img> video.mp4 (video/mp4)</a></div></div><div class="p">The XML source code corresponding to the above example
     is:</div><pre class="pre language-xml"><span class="hl-tag">&lt;p&gt;</span><span class="hl-tag">&lt;object</span> <span class="hl-attribute">data</span>=<span class="hl-value">"media/video.mp4"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"video/mp4"</span><span class="hl-tag">&gt;</span>
      <span class="hl-tag">&lt;param</span> <span class="hl-attribute">name</span>=<span class="hl-value">"source.src"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"media/video.ogv"</span><span class="hl-tag">/&gt;</span>
@@ -301,7 +301,7 @@
         content.</li><li class="li">When ditac is used to generate an XSL-FO based format (PDF, RTF,
         etc), only the fallback content appears in the ouput file.</li></ul></div><div id="media__flash_animation" class="section"><h3 class="section-title">Flash animation</h3><div class="p">Use the
     <tt class="tt">object</tt> DITA element to add Adobe® Flash®
-    animations<a id="media__I_yvvcqz_" name="media__I_yvvcqz_"></a><a id="media__I_s7cktl_" name="media__I_s7cktl_"></a><a id="media__I_2e6zdu_" name="media__I_2e6zdu_"></a>
+    animations<a id="media__I_qptxt4_" name="media__I_qptxt4_"></a><a id="media__I_jwwcor_" name="media__I_jwwcor_"></a><a id="media__I_tzwzf0_" name="media__I_tzwzf0_"></a>
     to your DITA topics. Example:</div><div class="p"><object class="object" data="images/animation.swf" type="application/x-shockwave-flash" height="123" width="431"><param name="movie" value="images/animation.swf"></param><param name="menu" value="true"></param><param name="quality" value="low"></param><div class="object-auto-fallback"><a href="images/animation.swf" target="_blank" class="object-download-link"><img src="resources/play.png" alt="animation.swf" border="0"></img> animation.swf (application/x-shockwave-flash)</a></div></object></div><div class="p">(You may have to right-click on the above screenshot and
     select <b class="uicontrol">Play</b> from the Flash popup menu to replay the
     animation.)</div><div class="p">The XML source code corresponding to the above example
@@ -331,14 +331,14 @@
     invisible).</div><div class="p">A simple solution for this problem is to insert a
     <tt class="tt">&lt;?onclick?&gt;</tt> processing-instruction in a DITA element
     (typically an <i class="i">inline</i> element such as <tt class="tt">xref</tt> or <tt class="tt">ph</tt>).
-    The <tt class="tt">&lt;?onclick?&gt;</tt> processing-instruction<a id="media__I_xlumr_" name="media__I_xlumr_"></a> allows to specify an number of
+    The <tt class="tt">&lt;?onclick?&gt;</tt> processing-instruction<a id="media__I_kzpzg_" name="media__I_kzpzg_"></a> allows to specify an number of
     actions:</div><dl class="compact-dl"><dt class="dt"><tt class="tt">play</tt></dt><dd class="dd">Play the associated resource from the beginning. Only applicable
           to video or audio targets.</dd><dt class="dt"><tt class="tt">pause</tt></dt><dd class="dd">Pause playing . Only applicable to video or audio targets.</dd><dt class="dt"><tt class="tt">resume</tt></dt><dd class="dd">Resume playing . Only applicable to video or audio targets.</dd><dt class="dt"><tt class="tt">mute</tt></dt><dd class="dd">Mute sound . Only applicable to video or audio targets.</dd><dt class="dt"><tt class="tt">unmute</tt></dt><dd class="dd">Unmute sound . Only applicable to video or audio targets.</dd><dt class="dt"><tt class="tt">show</tt></dt><dd class="dd">Set the visibility property of the target element to
           visible.</dd><dt class="dt"><tt class="tt">hide</tt></dt><dd class="dd">Set the visibility property of the target element to
           hidden.</dd></dl><div class="p">The above actions are exactly those supported by <a href="http://idpf.org/epub/30/spec/epub30-contentdocs.html#sec-xhtml-epub-trigger" class="xref">EPUB&nbsp;3's
-    <tt class="tt">epub:trigger</tt></a><a id="media__I_f9xngg_" name="media__I_f9xngg_"></a><a id="media__I_1xzw3h_" name="media__I_1xzw3h_"></a>.</div><div class="p">The <tt class="tt">&lt;?onclick?&gt;</tt>
+    <tt class="tt">epub:trigger</tt></a><a id="media__I_jqgjkq_" name="media__I_jqgjkq_"></a><a id="media__I_7472wh_" name="media__I_7472wh_"></a>.</div><div class="p">The <tt class="tt">&lt;?onclick?&gt;</tt>
     processing-instruction is processed by <code class="cmdname">ditac</code> for the
-    following output formats: XHTML&nbsp;5<a id="media__I_of6fxs_" name="media__I_of6fxs_"></a>, XHTML&nbsp;5 Web Help<a id="media__I_2di54l_" name="media__I_2di54l_"></a> and EPUB&nbsp;3<a id="media__I_ym8yie_" name="media__I_ym8yie_"></a>.
+    following output formats: XHTML&nbsp;5<a id="media__I_1htrpc_" name="media__I_1htrpc_"></a>, XHTML&nbsp;5 Web Help<a id="media__I_k9xef7_" name="media__I_k9xef7_"></a> and EPUB&nbsp;3<a id="media__I_44l2k0_" name="media__I_44l2k0_"></a>.
     It is discarded for any other output format.</div><div class="p">The syntax for the
     content of <tt class="tt">&lt;?onclick?&gt;</tt> is:</div><pre class="pre"><i class="i">onclick_data</i> -&gt; <i class="i">action</i> (S <i class="i">action</i>)*
 <i class="i">action</i> -&gt; <i class="i">op</i> '(' <i class="i">target_id</i>? ')'
@@ -349,7 +349,7 @@
     <tt class="tt">&lt;xref href="#media/target_audio"&gt;&lt;?onclick
     <b class="b">play()</b>?&gt;</tt> is equivalent to: <tt class="tt">&lt;xref
     href="#media/target_audio"&gt;&lt;?onclick
-    <b class="b">play(media/target_audio)</b>?&gt;</tt>.</div><div class="p">Example 1: <a href="#media__target_audio" id="media__I_nnecnf_" class="xref" name="media__I_nnecnf_">Say: "<i xml:lang="fr" lang="fr" class="i">Viens
+    <b class="b">play(media/target_audio)</b>?&gt;</tt>.</div><div class="p">Example 1: <a href="#media__target_audio" id="media__I_y3mqe6_" class="xref" name="media__I_y3mqe6_">Say: "<i xml:lang="fr" lang="fr" class="i">Viens
     Hubble!</i>"</a>, which, in French, means: "Come here Hubble!".<div class="object-fallback" id="media__target_audio"><img src="images/no_audio.png" class="image" alt="no_audio.png"></img> No audio. Say: "<i xml:lang="fr" lang="fr" class="i">Viens Hubble!</i>", which, in French, means: "Come here
         Hubble!".</div></div><div class="p">The XML source code corresponding to the above example
     is:</div><pre class="pre language-xml"><span class="hl-tag">&lt;p&gt;</span>Example 1: <span class="hl-tag">&lt;xref</span> <span class="hl-attribute">href</span>=<span class="hl-value">"#media/target_audio"</span><span class="hl-tag">&gt;</span><span class="hl-directive">&lt;?onclick play()?&gt;</span>
@@ -357,7 +357,7 @@ Say "<span class="hl-tag">&lt;ph</span> <span class="hl-attribute">xml:lang</spa
 ... 
 <span class="hl-tag">&lt;object</span> <span class="hl-attribute">data</span>=<span class="hl-value">"media/audio.wav"</span> <span class="hl-attribute">id</span>=<span class="hl-value">"audio_sample"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"audio/wav"</span><span class="hl-tag">&gt;</span>
   <span class="hl-tag">&lt;desc&gt;</span> ... <span class="hl-tag">&lt;/desc&gt;</span>
-<span class="hl-tag">&lt;/object&gt;</span><span class="hl-tag">&lt;/p&gt;</span></pre><div class="p">Example 2: <a href="#media__target_image" id="media__I_igs3z6_" class="xref" name="media__I_igs3z6_">Hide Hubble</a>. <a href="#media__target_image" id="media__I_qal3kg_" class="xref" name="media__I_qal3kg_">Show Hubble</a>.</div><div id="media__I_5g3lxn_" class="fig"><h4 class="fig-title">My name is Hubble. I'm a 7-month old Golden Retriever.</h4><div class="fig-contents"><div class="image-container"><img src="images/video_poster.jpg" id="media__target_image" class="image" alt="video_poster.jpg"></img></div></div></div><div class="p">The XML source code corresponding to the above example
+<span class="hl-tag">&lt;/object&gt;</span><span class="hl-tag">&lt;/p&gt;</span></pre><div class="p">Example 2: <a href="#media__target_image" id="media__I_e4t2gn_" class="xref" name="media__I_e4t2gn_">Hide Hubble</a>. <a href="#media__target_image" id="media__I_f295s1_" class="xref" name="media__I_f295s1_">Show Hubble</a>.</div><div id="media__I_3d9dkv_" class="fig"><h4 class="fig-title">My name is Hubble. I'm a 7-month old Golden Retriever.</h4><div class="fig-contents"><div class="image-container"><img src="images/video_poster.jpg" id="media__target_image" class="image" alt="video_poster.jpg"></img></div></div></div><div class="p">The XML source code corresponding to the above example
     is:</div><pre class="pre language-xml"><span class="hl-tag">&lt;p&gt;</span>Example 2: 
 <span class="hl-tag">&lt;xref</span> <span class="hl-attribute">href</span>=<span class="hl-value">"#media/target_image"</span><span class="hl-tag">&gt;</span><span class="hl-directive">&lt;?onclick hide()?&gt;</span>Hide Hubble<span class="hl-tag">&lt;/xref&gt;</span>.
 <span class="hl-tag">&lt;xref</span> <span class="hl-attribute">href</span>=<span class="hl-value">"#media/target_image"</span><span class="hl-tag">&gt;</span><span class="hl-directive">&lt;?onclick show()?&gt;</span>Show Hubble<span class="hl-tag">&lt;/xref&gt;</span>.<span class="hl-tag">&lt;/p&gt;</span></pre></div></div></div></body></html>

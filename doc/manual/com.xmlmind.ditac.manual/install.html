@@ -1,5 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><title>Installing XMLmind DITA Converter</title><link rel="stylesheet" type="text/css" href="resources/basic.css"></link><meta name="generator" content="XMLmind DITA Converter 2.5.1"></meta></head><body><div id="install" class="task"><h2 class="chapter-title">Installing XMLmind DITA Converter</h2><div class="taskbody"><div id="install__I_m6wj49_" class="prereq"><h3 class="prereq-title">Before you begin</h3><div class="p">XMLmind DITA Converter (<i class="i">ditac</i> for short) requires the
-    Oracle or Apple <span class="tm">Java™</span> runtime 1.5 or above.</div><div class="p">On
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><title>Installing XMLmind DITA Converter</title><link rel="stylesheet" type="text/css" href="resources/basic.css"></link><meta name="generator" content="XMLmind DITA Converter 2.5.3"></meta></head><body><div id="install" class="task"><h2 class="chapter-title">Installing XMLmind DITA Converter</h2><div class="taskbody"><div id="install__I_jdia6w_" class="prereq"><h3 class="prereq-title">Before you begin</h3><div class="p">XMLmind DITA Converter (<i class="i">ditac</i> for short) requires the
+    Oracle or Apple <span class="tm">Java™</span> runtime 1.6 or above.</div><div class="p">On
     Unix, make sure that the Java <code class="filepath">bin/</code> directory is
     referenced in the <tt class="tt">$PATH</tt> and, at the same time, check that the
     Java runtime in the <tt class="tt">$PATH</tt> has the right version:</div><pre class="screen">$ java -version
@@ -10,15 +10,15 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.45-b08, mixed mode)</pre><div class=
     the <code class="cmdname">java</code> executable is automatically found in the
     <tt class="tt">$PATH</tt> when Java has been properly installed.</div></div><div class="steps"><h3 class="steps-title">Procedure</h3><ol class="step-list"><li class="required-step"><span class="cmd">Unzip the distribution in any directory you want.</span><div class="stepxmp"><pre class="screen">C:\&gt; mkdir ditac
 C:\&gt; cd ditac
-C:\ditac&gt; unzip ditac-2_5_1.zip
-C:\ditac&gt; dir ditac-2_5_1
+C:\ditac&gt; unzip ditac-2_5_3.zip
+C:\ditac&gt; dir ditac-2_5_3
 ... &lt;DIR&gt; bin
 ... &lt;DIR&gt; doc
 ... &lt;DIR&gt; docsrc
 ...</pre></div><div class="stepresult">XMLmind DITA Converter is intended to be used directly
-        from the <code class="filepath">ditac-2_5_1/</code> directory. That is, you can
+        from the <code class="filepath">ditac-2_5_3/</code> directory. That is, you can
         run the <code class="cmdname">ditac</code> command by simply executing (in a
-        Command Prompt on windows, a terminal on Unix):<pre class="screen">C:\ditac&gt; ditac-2_5_1\bin\ditac</pre></div></li><li class="optional-step"><span class="cmd">Depending the output formats you want to generate, you'll need to
+        Command Prompt on windows, a terminal on Unix):<pre class="screen">C:\ditac&gt; ditac-2_5_3\bin\ditac</pre></div></li><li class="optional-step"><span class="cmd">Depending the output formats you want to generate, you'll need to
         download and install third-party external tools.</span><ul class="choices"><li class="choice"><div class="p">If you want to generate PDF or PostScript®, download and
           install <a href="http://xmlgraphics.apache.org/fop/" class="xref" target="_blank">Apache
           FOP <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a>.</div><div class="p">Alternatively, you may prefer to purchase <a href="http://www.renderx.com/tools/xep.html" class="xref" target="_blank">RenderX XEP <img border="0" src="resources/new_window.png" alt="Opens in new window" width="11" height="10"></img></a> or <a href="http://www.antennahouse.com/" class="xref" target="_blank">Antenna House
@@ -51,7 +51,7 @@ C:\ditac&gt; dir ditac-2_5_1
         <a href="commandLine.html#commandLine__option-hhc" class="xref"><code class="option">-hhc</code></a>.
         However, it is much more convenient to specify these command-line
         options once for all in a
-        <code class="filepath">ditac.options</code><a id="install__I_6sc1tk_" name="install__I_6sc1tk_"></a> file.</span><ol class="substeps"><li class="substep"><span class="cmd">Create <code class="filepath">ditac.options</code>, a plain text file
+        <code class="filepath">ditac.options</code><a id="install__I_6t2wc9_" name="install__I_6t2wc9_"></a> file.</span><ol class="substeps"><li class="substep"><span class="cmd">Create <code class="filepath">ditac.options</code>, a plain text file
             encoded using the native encoding of the platform (e.g.
             <tt class="tt">Windows-1252</tt> on a Western Windows PC), in the ditac user
             preferences directory.</span><div id="install__ditac_user_preferences_dir" class="info"><div class="p">The ditac user

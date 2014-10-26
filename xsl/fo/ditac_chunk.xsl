@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-| Copyright (c) 2009-2013 Pixware SARL. All rights reserved.
+| Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
 |
 | Author: Hussein Shafie (hussein@xmlmind.com)
 |
@@ -73,7 +73,9 @@
 
     <xsl:variable name="documentDate">
       <xsl:for-each select="$ditacLists/ditac:titlePage">
-        <xsl:call-template name="lastCritdate"/>
+        <xsl:call-template name="lastCritdate">
+          <xsl:with-param name="defaulted" select="true()"/>
+        </xsl:call-template>
       </xsl:for-each>
     </xsl:variable>
 

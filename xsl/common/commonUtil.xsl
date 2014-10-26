@@ -20,7 +20,7 @@
   <xsl:function name="u:basename" as="xs:string">
     <xsl:param name="path" as="xs:string"/>
 
-    <xsl:sequence select="if ($path ne '')
+    <xsl:sequence select="if ($path ne '') 
                           then tokenize($path, '/')[last()]
                           else ''" />
   </xsl:function>
@@ -31,7 +31,7 @@
     <xsl:param name="path" as="xs:string"/>
 
     <xsl:variable name="basename" select="u:basename($path)" />
-    <xsl:sequence select="if ($basename ne '')
+    <xsl:sequence select="if ($basename ne '') 
                           then tokenize($basename, '\.')[last()]
                           else ''" />
   </xsl:function>
@@ -42,7 +42,7 @@
     <xsl:param name="path" as="xs:string"/>
 
     <xsl:variable name="ext" select="u:extension($path)" />
-    <xsl:sequence select="if ($ext ne '')
+    <xsl:sequence select="if ($ext ne '') 
                           then concat('.', $ext)
                           else ''" />
   </xsl:function>
@@ -92,7 +92,7 @@
     <!-- @width, @height OK. Deprecated @longdescref ignored. -->
     <xsl:sequence select="$detect-audio-video eq 'yes' and
                           string-length($object/@data) gt 0 and
-                          (starts-with($object/@type, 'audio/') or
+                          (starts-with($object/@type, 'audio/') or 
                            starts-with($object/@type, 'video/')) and
                           empty($object/@declare) and
                           empty($object/@classid) and
@@ -113,11 +113,11 @@
 
     <xsl:if test="$href ne '' and $href ne '???'">
       <xsl:choose>
-        <xsl:when test="@scope eq 'external' and
+        <xsl:when test="@scope eq 'external' and 
                         not(matches($href, '^[a-zA-Z][a-zA-Z0-9.+-]*:/'))">
           <xsl:if test="not(starts-with($external-resource-base, '#'))">
-            <xsl:variable name="externalResourceBase"
-              select="if ($external-resource-base ne '' and
+            <xsl:variable name="externalResourceBase" 
+              select="if ($external-resource-base ne '' and 
                           not(ends-with($external-resource-base, '/')))
                       then concat($external-resource-base, '/')
                       else $external-resource-base"/>
@@ -184,7 +184,7 @@
         <xsl:variable name="nesting"
           select="count(ancestor::*[contains(@class,' topic/ol ')])"/>
         <xsl:sequence select="if ($nesting eq 0) then ''
-                              else if (($nesting mod 2) eq 1) then 'a'
+                              else if (($nesting mod 2) eq 1) then 'a' 
                               else '1'"/>
       </xsl:otherwise>
     </xsl:choose>
@@ -208,9 +208,9 @@
   <xsl:function name="u:parseOlStart" as="xs:integer">
     <xsl:param name="outputclass" as="xs:string"/>
 
-    <xsl:variable name="start"
+    <xsl:variable name="start" 
       select="substring-before(substring-after($outputclass, 'start('), ')')"/>
-    <xsl:sequence select="if (number($start) ge 0)
+    <xsl:sequence select="if (number($start) ge 0) 
                           then xs:integer($start)
                           else 1"/>
   </xsl:function>
@@ -218,7 +218,7 @@
   <xsl:function name="u:computeOlStart" as="xs:integer">
     <xsl:param name="list" as="element()?"/>
     <xsl:param name="olStart" as="xs:integer"/>
-
+    
     <xsl:choose>
       <xsl:when test="empty($list)">
         <xsl:sequence select="$olStart"/>
@@ -230,7 +230,7 @@
 
         <xsl:choose>
           <xsl:when test="contains($list/@outputclass, 'start(')">
-            <xsl:sequence
+            <xsl:sequence 
                 select="u:parseOlStart(string($list/@outputclass)) +
                         $itemCount - 1 + $olStart"/>
           </xsl:when>
@@ -283,27 +283,27 @@
 
     <xsl:for-each select="$entry">
       <!-- Remember that a table can contain another table. -->
-      <xsl:variable name="tgroup"
+      <xsl:variable name="tgroup" 
         select="(ancestor::*[contains(@class,' topic/tgroup ')])[last()]"/>
-      <xsl:variable name="colspecs"
+      <xsl:variable name="colspecs" 
         select="$tgroup/*[contains(@class,' topic/colspec ')]"/>
 
       <xsl:variable name="namest" select="@namest"/>
       <xsl:variable name="nameend" select="@nameend"/>
 
       <xsl:choose>
-        <xsl:when test="exists($colspecs) and
+        <xsl:when test="exists($colspecs) and 
                         exists($namest) and exists($nameend)">
-          <xsl:variable name="colst"
+          <xsl:variable name="colst" 
                         select="($colspecs[./@colname eq $namest])[1]"/>
-          <xsl:variable name="colend"
+          <xsl:variable name="colend" 
                         select="($colspecs[./@colname eq $nameend])[1]"/>
-
+          
           <xsl:choose>
             <xsl:when test="exists($colst) and exists($colend)">
-              <xsl:variable name="colnumst"
+              <xsl:variable name="colnumst" 
                             select="u:colspecNumber($colst)"/>
-              <xsl:variable name="colnumend"
+              <xsl:variable name="colnumend" 
                             select="u:colspecNumber($colend)"/>
 
               <xsl:choose>
@@ -331,7 +331,7 @@
     <xsl:param name="colspec" as="element()"/>
 
     <xsl:for-each select="$colspec">
-      <xsl:variable name="previousColspec"
+      <xsl:variable name="previousColspec" 
         select="(preceding-sibling::*[contains(@class,' topic/colspec ')])[last()]"/>
 
       <xsl:variable name="nextColspecNumber" as="xs:integer">
@@ -347,7 +347,7 @@
 
       <xsl:choose>
         <!-- number() returns NaN instead of raising an error. -->
-        <xsl:when test="exists(@colnum) and
+        <xsl:when test="exists(@colnum) and 
                         (number(@colnum) ge $nextColspecNumber)">
           <xsl:sequence select="xs:integer(@colnum)"/>
         </xsl:when>
@@ -362,7 +362,7 @@
     <xsl:param name="body" as="element()"/>
 
     <xsl:for-each select="$body">
-      <xsl:variable name="firstRow"
+      <xsl:variable name="firstRow" 
                     select="(*[contains(@class,' topic/row ')])[1]"/>
       <xsl:sequence select="if (exists($firstRow))
                             then u:rowLayout($firstRow, 1, ())
@@ -376,14 +376,14 @@
     <xsl:param name="bodyLayout" as="xs:string*"/>
 
     <xsl:for-each select="$row">
-      <xsl:variable name="firstEntry"
+      <xsl:variable name="firstEntry" 
                     select="(*[contains(@class,' topic/entry ')])[1]"/>
-      <xsl:variable name="bodyLayout2"
+      <xsl:variable name="bodyLayout2" 
         select="if (exists($firstEntry))
                 then u:entryLayout($firstEntry, $rowIndex, $bodyLayout)
                 else ()"/>
 
-      <xsl:variable name="nextRow"
+      <xsl:variable name="nextRow" 
         select="(following-sibling::*[contains(@class,' topic/row ')])[1]"/>
       <xsl:choose>
         <xsl:when test="exists($nextRow)">
@@ -414,9 +414,9 @@
             <xsl:sequence select="u:colspecNumber($explicitColspec)"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:variable name="previousEntry"
+            <xsl:variable name="previousEntry" 
               select="(preceding-sibling::*[contains(@class,' topic/entry ')])[last()]"/>
-            <xsl:variable name="colIndex0"
+            <xsl:variable name="colIndex0" 
               select="if (exists($previousEntry))
                       then (u:entryEndColumn($previousEntry, $bodyLayout) + 1)
                       else 1"/>
@@ -435,7 +435,7 @@
 
       <xsl:variable name="bodyLayout2" select="($bodyLayout, $added)"/>
 
-      <xsl:variable name="nextEntry"
+      <xsl:variable name="nextEntry" 
         select="(following-sibling::*[contains(@class,' topic/entry ')])[1]"/>
       <xsl:choose>
         <xsl:when test="exists($nextEntry)">
@@ -456,7 +456,7 @@
 
     <xsl:variable name="tail"
                   select="concat('_', $rowIndex, '_', $colIndex)"/>
-    <xsl:variable name="match"
+    <xsl:variable name="match" 
                   select="for $s in $bodyLayout
                           return
                             if (ends-with($s, $tail))
@@ -476,7 +476,7 @@
 
     <xsl:variable name="tail"
                   select="concat('_', $rowIndex, '_', $colIndex)"/>
-    <xsl:variable name="match"
+    <xsl:variable name="match" 
                   select="for $s in $bodyLayout
                           return
                             if (ends-with($s, $tail))
@@ -559,9 +559,9 @@
 
     <xsl:for-each select="$entry">
       <!-- Remember that a table can contain another table. -->
-      <xsl:variable name="tgroup"
+      <xsl:variable name="tgroup" 
         select="(ancestor::*[contains(@class,' topic/tgroup ')])[last()]"/>
-      <xsl:variable name="colspecs"
+      <xsl:variable name="colspecs" 
                     select="$tgroup/*[contains(@class,' topic/colspec ')]"/>
 
       <xsl:choose>
@@ -579,7 +579,7 @@
             <xsl:otherwise>
               <xsl:choose>
                 <xsl:when test="count($bodyLayout) gt 0">
-                  <xsl:variable name="startColumn"
+                  <xsl:variable name="startColumn" 
                     select="u:entryStartColumn($entry, $bodyLayout)"/>
                   <xsl:sequence
                       select="for $colspec in $colspecs
@@ -610,12 +610,12 @@
     <xsl:param name="source" as="node()*" select="()" />
     <xsl:param name="config" as="xs:string" select="''" />
 
-    <xsl:variable name="highlighted"
-                  select="Highlight:highlight($language, $source, $config)"
+    <xsl:variable name="highlighted" 
+                  select="Highlight:highlight($language, $source, $config)" 
                   use-when="function-available('Highlight:highlight')" />
 
-    <xsl:variable name="highlighted"
-                  select="$source/*|$source/text()"
+    <xsl:variable name="highlighted" 
+                  select="$source/*|$source/text()" 
                   use-when="not(function-available('Highlight:highlight'))" />
 
     <xsl:apply-templates select="$highlighted" />
@@ -680,11 +680,11 @@
 
   <xsl:template name="lang">
     <xsl:variable name="lang"
-      select="lower-case(if (ancestor-or-self::*/@xml:lang) then
+      select="lower-case(if (ancestor-or-self::*/@xml:lang) then 
                              string((ancestor-or-self::*/@xml:lang)[last()])
-                         else
+                         else 
                              'en')"/>
-
+    
     <!-- Fix a common error. -->
     <xsl:variable name="lang2" select="translate($lang, '_', '-')"/>
 

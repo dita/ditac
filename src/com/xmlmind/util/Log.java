@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2013 Pixware SARL. All rights reserved. 
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved. 
  *
  * Author: Hussein Shafie
  *
@@ -100,7 +100,7 @@ public final class Log {
 
     // -----------------------------------------------------------------------
 
-    private static Object lockRecorderFactory = new Object();
+    private static final Object lockRecorderFactory = new Object();
     private static RecorderFactory recorderFactory = new RecorderFactoryImpl();
     private static HashMap<String, Log> logs = new HashMap<String, Log>();
 
@@ -128,8 +128,18 @@ public final class Log {
 
     /**
      * Returns the log having specified name. Creates one if needed to.
+     * <p>A log name may be anything string. However some related utilities
+     * support <i>qualified names</i>. A qualified name has the following 
+     * syntax:<pre>qualified_name -&gt; [ namespace ]? local_part
+     *namespace -&gt; '{' [ string ]? '}'
+     *local_part -&gt; string</pre>
+     * <p>Note that <tt>{}foo</tt> and <tt>foo</tt> are equivalent.
      */
     public static Log getLog(String name) {
+        if (name.startsWith("{}")) {
+            name = name.substring(2);
+        }
+
         synchronized (lockRecorderFactory) {
             Log log = logs.get(name);
             if (log == null) {

@@ -96,7 +96,7 @@ eclipsehelp:
 		-p plugin-name "XMLmind DITA Converter Manual" \
 		-p plugin-id com.xmlmind.ditac.manual \
 		-p plugin-provider XMLmind \
-		-p plugin-version 2.5.1 \
+		-p plugin-version 2.5.3 \
 		$(DOC_DIR)/com.xmlmind.ditac.manual/_.html manual.ditamap
 
 # Test on iPad iBooks:

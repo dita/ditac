@@ -6,7 +6,7 @@
 
   <taskbody>
     <prereq><p>XMLmind DITA Converter (<i>ditac</i> for short) requires the
-    Oracle or Apple <tm tmtype="tm">Java</tm> runtime 1.5 or above.</p><p>On
+    Oracle or Apple <tm tmtype="tm">Java</tm> runtime 1.6 or above.</p><p>On
     Unix, make sure that the Java <filepath>bin/</filepath> directory is
     referenced in the <tt>$PATH</tt> and, at the same time, check that the
     Java runtime in the <tt>$PATH</tt> has the right version:</p><screen>$ java -version
@@ -23,17 +23,17 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.45-b08, mixed mode)</screen><p>On
 
         <stepxmp><screen>C:\&gt; mkdir ditac
 C:\&gt; cd ditac
-C:\ditac&gt; unzip ditac-2_5_1.zip
-C:\ditac&gt; dir ditac-2_5_1
+C:\ditac&gt; unzip ditac-2_5_3.zip
+C:\ditac&gt; dir ditac-2_5_3
 ... &lt;DIR&gt; bin
 ... &lt;DIR&gt; doc
 ... &lt;DIR&gt; docsrc
 ...</screen></stepxmp>
 
         <stepresult>XMLmind DITA Converter is intended to be used directly
-        from the <filepath>ditac-2_5_1/</filepath> directory. That is, you can
+        from the <filepath>ditac-2_5_3/</filepath> directory. That is, you can
         run the <cmdname>ditac</cmdname> command by simply executing (in a
-        Command Prompt on windows, a terminal on Unix):<screen>C:\ditac&gt; ditac-2_5_1\bin\ditac</screen></stepresult>
+        Command Prompt on windows, a terminal on Unix):<screen>C:\ditac&gt; ditac-2_5_3\bin\ditac</screen></stepresult>
       </step>
 
       <step importance="optional">

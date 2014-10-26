@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2012 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -570,6 +570,30 @@ public final class FileUtil {
         }
     }
 
+    /**
+     * Create a temporary directory.
+     *
+     * @param prefix the prefix string to be used in generating 
+     * the diretory name; must be at least three characters long
+     * @param directory the directory in which the new directory 
+     * is to be created, or <code>null</code> if the default 
+     * temporary-file directory is to be used
+     * @return the newly created temporary directory
+     * @exception IOException if the temporary directory cannot be created
+     */
+    public static File createTempDirectory(String prefix, File directory) 
+        throws IOException {
+        File tempFile = File.createTempFile(prefix, "", directory);
+        File tempDir = new File(tempFile.getPath() + "_d");
+        tempFile.delete();
+
+        if (!tempDir.mkdir()) {
+            throw new IOException(Msg.msg("cannotMkdir", tempDir));
+        }
+
+        return tempDir;
+    }
+
     // -----------------------------------------------------------------------
 
     private static final DecimalFormat fileSizeFormatDefault = 
@@ -1033,7 +1057,7 @@ public final class FileUtil {
     }
 
     /**
-     * Copies input to output. Does <em>not</close> close streams 
+     * Copies input to output. Does <em>not</em> close streams 
      * after copying the data.
      *
      * @see #copyBytes

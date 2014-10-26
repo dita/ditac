@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 Pixware SARL. All rights reserved.
+ * Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -257,7 +257,7 @@ import com.xmlmind.ditac.util.ConsoleHelper;
                         // Nothing special to do.
                         break;
                     case BRANCH:
-                        if (loadedTopic.topics.length > 0) {
+                        if (loadedTopic.getNestedTopics().length > 0) {
                             expandBranch(loadedTopic, element);
                         }
                         // Otherwise, no nested topics.
@@ -304,7 +304,7 @@ import com.xmlmind.ditac.util.ConsoleHelper;
 
         Document doc = anchor.getOwnerDocument();
 
-        LoadedTopic[] nestedTopics = loadedTopic.topics;
+        LoadedTopic[] nestedTopics = loadedTopic.getNestedTopics();
         for (int i = 0; i < nestedTopics.length; ++i) {
             LoadedTopic nestedTopic = nestedTopics[i];
 
@@ -539,7 +539,7 @@ import com.xmlmind.ditac.util.ConsoleHelper;
             return false;
         }
 
-        LoadedTopic[] nestedTopics = loadedTopic.topics;
+        LoadedTopic[] nestedTopics = loadedTopic.getNestedTopics();
         if (nestedTopics != null) {
             int numberLength = number.length;
             String subRole = DITAUtil.getSubRole(role);

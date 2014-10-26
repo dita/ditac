@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2011 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -21,6 +21,7 @@ TEST_IDENTITY_LINEAR_HASHTABLE*/
  * {@link System#identityHashCode} and compared using <code>==</code>.
  * <p>This class is <em>not</em> thread-safe.
  */
+@SuppressWarnings("unchecked")
 public final class IdentityLinearHashtable<K,V> extends LinearHashtable<K,V> {
     private static final long serialVersionUID = 2856443646185780600L;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2012 Pixware SARL. All right reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All right reserved.
  *
  * Author: Hussein Shafie
  *
@@ -10,13 +10,13 @@ package com.xmlmind.util;
 
 import java.io.IOException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.BufferedOutputStream;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.awt.Rectangle;
@@ -26,251 +26,39 @@ import java.awt.print.Paper;
 
 /**
  * Class used by an application to store the preferences of its user.
+ * <p>This class is basically a wrapper around a {@link Properties} object, 
+ * implementing a number of convenience methods such as {@link #getBoolean}.
  * <p>This class is thread-safe.
  */
 public class Preferences {
     /**
-     * Persistent key/value map used to implement Preferences.
-     * <p>Failure to load or save such map from/to its backing store is not a
-     * fatal error. Implementations are not even required to report an error
-     * message.
+     * The <code>Properties</code> object being wrapped by 
+     * this <code>Preferences</code> object.
      */
-    public interface Map {
-        /**
-         * Returns value corresponding to specified key. Returns
-         * <code>null</code> if not found.
-         */
-        String getPreference(String key);
-
-        /**
-         * Adds or replaces value for specified key.
-         */
-        void putPreference(String key, String value);
-
-        /**
-         * Removes value corresponding to specified key, if any.
-         */
-        void removePreference(String key);
-
-        /**
-         * Makes this map empty.
-         */
-        void removeAllPreferences();
-
-        /**
-         * Returns the list of key/value pairs contained in this map. This
-         * list may be empty but cannot be <code>null</code>.
-         */
-        String[] getAllPreferences();
-
-        /**
-         * Saves this map to its backing store.
-         * 
-         * @return <code>true</code> if map has been saved; <code>false</code>
-         * otherwise (I/O error or the map is not persistent).
-         */
-        boolean save();
-    }
+    public final Properties properties;
 
     // -----------------------------------------------------------------------
 
     /**
-     * Implementation of Preferences.Map based on java.util.Properties.
-     */
-    public static final class MapImpl implements Map {
-        private File file;
-        private String header;
-        private Properties properties;
-
-        /**
-         * Constructs a Preferences.Map initialized using specified 
-         * properties.
-         * <p>Equivalent to <code>MapImpl(properties, null, null)</code>.
-         * <p>This Preferences.Map cannot be saved to a file.
-         */
-        public MapImpl(Properties properties) {
-            this(properties, null, null);
-        }
-
-        /**
-         * Constructs a Preferences.Map initialized using specified 
-         * property file.
-         * <p>Equivalent to <code>MapImpl(null, file, header)</code>.
-         */
-        public MapImpl(File file, String header) {
-            this(null, file, header);
-        }
-        
-        /**
-         * Constructs a Preferences.Map, possibly initialized 
-         * using specified parameters.
-         * <ul>
-         * <li>If <tt>properties</tt> is specified, this java.util.Properties
-         * is used by this Preferences.Map and <tt>file</tt>, if specified,
-         * is not loaded.
-         * <li>If <tt>properties</tt> is not specified and if <tt>file</tt>
-         * is specified, the content of this file is loaded in a newly created
-         * java.util.Properties.
-         * <li>If <tt>properties</tt> and <tt>file</tt> are both not 
-         * specified, a newly created, empty, java.util.Properties is used
-         * by this Preferences.Map.
-         * </ul>
-         *
-         * @param properties java.util.Properties used by this Preferences.Map.
-         * May be <code>null</code>, in which case an new java.util.Properties
-         * is created.
-         * @param file Java<sup>TM</sup> properties file used as 
-         * a backing store for this Preferences.Map.
-         * May be <code>null</code>, in which case this Preferences.Map 
-         * cannot be saved to a file.
-         * @param header first line (generally giving info about the
-         * application) which is to be saved in the properties file.
-         * May be <code>null</code>, in which case no header line 
-         * will be added to the saved properties file.
-         */
-        public MapImpl(Properties properties, File file, String header) {
-            if (properties == null) {
-                properties = new Properties();
-
-                if (file != null) {
-                    try {
-                        BufferedInputStream in = 
-                            new BufferedInputStream(new FileInputStream(file),
-                                                    65536);
-                        try {
-                            properties.load(in);
-                        } finally {
-                            in.close();
-                        }
-                    } catch (IOException ignored) {
-                        //ignored.printStackTrace();
-                    }
-                }
-            }
-
-            this.file = file;
-            this.header = header;
-            this.properties = properties;
-        }
-
-        /**
-         * Returns the properties file used as a backing store for this map.
-         */
-        public File getFile() {
-            return file;
-        }
-        
-        /**
-         * Returns the first line (generally giving info about the
-         * application) which is to be saved in the properties file.
-         */
-        public String getHeader() {
-            return header;
-        }
-
-        public String getPreference(String key) {
-            return (String) properties.get(key);
-        }
-
-        public void putPreference(String key, String value) {
-            properties.put(key, value);
-        }
-
-        public void removePreference(String key) {
-            properties.remove(key);
-        }
-
-        public void removeAllPreferences() {
-            properties.clear();
-        }
-
-        public String[] getAllPreferences() {
-            String[] list = new String[properties.size() * 2];
-
-            int i = 0;
-            Iterator<java.util.Map.Entry<Object, Object>> iter = 
-                properties.entrySet().iterator();
-            while (iter.hasNext()) {
-                java.util.Map.Entry<Object, Object> e = iter.next();
-
-                list[i] = (String) e.getKey();
-                list[i+1] = (String) e.getValue();
-                i += 2;
-            }
-
-            return list;
-        }
-
-        public boolean save() {
-            if (file == null) {
-                return false;
-            }
-
-            try {
-                File tmpFile = File.createTempFile("prefs", ".tmp", 
-                                                   file.getParentFile());
-
-                BufferedOutputStream out = 
-                    new BufferedOutputStream(new FileOutputStream(tmpFile),
-                                             65536);
-                try {
-                    properties.store(out, ((header == null)? "" : header));
-                    out.flush();
-                } finally {
-                    out.close();
-                }
-
-                if (file.exists()) {
-                    file.delete();
-                }
-                // renameTo is assumed to be atomic.
-                tmpFile.renameTo(file);
-            } catch (IOException ignored) {
-                //ignored.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-    }
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * The persistent key/value map used to implement this Preferences
-     * object.
-     */
-    public final Map map;
-
-    /**
-     * Constructs an empty <code>Preferences</code> object which cannot be
-     * saved to a properties file.
+     * Constructs an empty <code>Preferences</code> object.
      */
     public Preferences() {
-        this(new MapImpl(null, null, null));
+        this(null);
     }
 
     /**
-     * Constructs a <code>Preferences</code> object which is initialized with
-     * the content of a properties file and which can be saved back to this
-     * properties file.
+     * Constructs a <code>Preferences</code> object acting a a wrapper for 
+     * specified <code>Properties</code> object.
      * 
-     * @param file Java<sup>TM</sup> file properties file used a backing store
-     * for the preferences.
-     * May be <code>null</code>.
-     * @param header first (comment) line to be saved in the properties file.
-     * May be <code>null</code>.
+     * @param properties wrapped <code>Properties</code> object. 
+     * May be <code>null</code> in which case a <code>Properties</code> object
+     * is created.
      */
-    public Preferences(File file, String header) {
-        this(new MapImpl(null, file, header));
-    }
-
-    /**
-     * Constructs a Preferences object using specified persistent key/value
-     * map to store user preferences.
-     */
-    public Preferences(Map map) {
-        this.map = map;
+    public Preferences(Properties properties) {
+        if (properties == null) {
+            properties = new Properties();
+        }
+        this.properties = properties;
     }
 
     /**
@@ -280,7 +68,7 @@ public class Preferences {
      * @param value the value of the preference
      */
     public synchronized void putString(String key, String value) {
-        map.putPreference(key, value);
+        properties.setProperty(key, value);
     }
 
     /**
@@ -292,7 +80,7 @@ public class Preferences {
      * otherwise
      */
     public synchronized String getString(String key, String fallback) {
-        String value = map.getPreference(key);
+        String value = properties.getProperty(key);
         if (value == null) {
             return fallback;
         }
@@ -307,7 +95,7 @@ public class Preferences {
      * @param value the value of the preference
      */
     public synchronized void putBoolean(String key, boolean value) {
-        map.putPreference(key, value? "true" : "false");
+        properties.setProperty(key, value? "true" : "false");
     }
 
     /**
@@ -320,7 +108,7 @@ public class Preferences {
      * <code>fallback</code> otherwise
      */
     public synchronized boolean getBoolean(String key, boolean fallback) {
-        String value = map.getPreference(key);
+        String value = properties.getProperty(key);
         if (value == null) {
             return fallback;
         }
@@ -341,7 +129,7 @@ public class Preferences {
      * @param value the value of the preference
      */
     public synchronized void putInt(String key, int value) {
-        map.putPreference(key, Integer.toString(value));
+        properties.setProperty(key, Integer.toString(value));
     }
 
     /**
@@ -376,9 +164,10 @@ public class Preferences {
      * <code>fallback</code> otherwise
      */
     public synchronized int getInt(String key, int fallback) {
-        String value = map.getPreference(key);
-        if (value == null)
+        String value = properties.getProperty(key);
+        if (value == null) {
             return fallback;
+        }
 
         try {
             return Integer.parseInt(value);
@@ -394,7 +183,7 @@ public class Preferences {
      * @param value the value of the preference
      */
     public synchronized void putLong(String key, long value) {
-        map.putPreference(key, Long.toString(value));
+        properties.setProperty(key, Long.toString(value));
     }
 
     /**
@@ -429,7 +218,7 @@ public class Preferences {
      * <code>fallback</code> otherwise
      */
     public synchronized long getLong(String key, long fallback) {
-        String value = map.getPreference(key);
+        String value = properties.getProperty(key);
         if (value == null) {
             return fallback;
         }
@@ -448,7 +237,7 @@ public class Preferences {
      * @param value the value of the preference
      */
     public synchronized void putDouble(String key, double value) {
-        map.putPreference(key, Double.toString(value));
+        properties.setProperty(key, Double.toString(value));
     }
 
     /**
@@ -466,10 +255,11 @@ public class Preferences {
     public synchronized double getDouble(String key, double min, double max, 
                                          double fallback) {
         double i = getDouble(key, fallback);
-        if (i < min || i > max)
+        if (i < min || i > max) {
             return fallback;
-        else
+        } else {
             return i;
+        }
     }
 
     /**
@@ -482,7 +272,7 @@ public class Preferences {
      * <code>fallback</code> otherwise
      */
     public synchronized double getDouble(String key, double fallback) {
-        String value = map.getPreference(key);
+        String value = properties.getProperty(key);
         if (value == null) {
             return fallback;
         }
@@ -503,7 +293,8 @@ public class Preferences {
     public synchronized void putStrings(String key, String[] value) {
         StringBuilder buffer = new StringBuilder();
 
-        for (int i = 0; i < value.length; ++i) {
+        final int count = value.length;
+        for (int i = 0; i < count; ++i) {
             String s = value[i];
 
             if (s.indexOf('&') >= 0) {
@@ -520,7 +311,7 @@ public class Preferences {
             buffer.append(s);
         }
 
-        map.putPreference(key, buffer.toString());
+        properties.setProperty(key, buffer.toString());
     }
 
     /**
@@ -532,7 +323,7 @@ public class Preferences {
      * otherwise
      */
     public synchronized String[] getStrings(String key, String[] fallback) {
-        String value = map.getPreference(key);
+        String value = properties.getProperty(key);
         if (value == null) {
             return fallback;
         }
@@ -542,7 +333,8 @@ public class Preferences {
         }
 
         String[] list = StringUtil.split(value, '\n');
-        for (int i = 0; i < list.length; ++i) {
+        final int count = list.length;
+        for (int i = 0; i < count; ++i) {
             String s = list[i];
 
             if (s.indexOf("&#xA;") >= 0) {
@@ -568,14 +360,15 @@ public class Preferences {
     public synchronized void putInts(String key, int[] value) {
         StringBuilder buffer = new StringBuilder();
 
-        for (int i = 0; i < value.length; ++i) {
+        final int count = value.length;
+        for (int i = 0; i < count; ++i) {
             if (i > 0) {
                 buffer.append(' ');
             }
             buffer.append(value[i]);
         }
 
-        map.putPreference(key, buffer.toString());
+        properties.setProperty(key, buffer.toString());
     }
 
     /**
@@ -588,15 +381,16 @@ public class Preferences {
      * <code>fallback</code> otherwise
      */
     public synchronized int[] getInts(String key, int[] fallback) {
-        String value = map.getPreference(key);
+        String value = properties.getProperty(key);
         if (value == null) {
             return fallback;
         }
 
         StringTokenizer tokens = new StringTokenizer(value);
-        int[] list = new int[tokens.countTokens()];
+        final int count = tokens.countTokens();
+        int[] list = new int[count];
 
-        for (int i = 0; i < list.length; ++i) {
+        for (int i = 0; i < count; ++i) {
             try {
                 list[i] = Integer.parseInt(tokens.nextToken());
             } catch (NumberFormatException ignored) {
@@ -616,14 +410,15 @@ public class Preferences {
     public synchronized void putDoubles(String key, double[] value) {
         StringBuilder buffer = new StringBuilder();
 
-        for (int i = 0; i < value.length; ++i) {
+        final int count = value.length;
+        for (int i = 0; i < count; ++i) {
             if (i > 0) {
                 buffer.append(' ');
             }
             buffer.append(value[i]);
         }
 
-        map.putPreference(key, buffer.toString());
+        properties.setProperty(key, buffer.toString());
     }
 
     /**
@@ -636,15 +431,16 @@ public class Preferences {
      * <code>fallback</code> otherwise
      */
     public synchronized double[] getDoubles(String key, double[] fallback) {
-        String value = map.getPreference(key);
+        String value = properties.getProperty(key);
         if (value == null) {
             return fallback;
         }
 
         StringTokenizer tokens = new StringTokenizer(value);
-        double[] list = new double[tokens.countTokens()];
+        final int count = tokens.countTokens();
+        double[] list = new double[count];
 
-        for (int i = 0; i < list.length; ++i) {
+        for (int i = 0; i < count; ++i) {
             try {
                 list[i] = Double.parseDouble(tokens.nextToken());
             } catch (NumberFormatException ignored) {
@@ -688,7 +484,6 @@ public class Preferences {
         return (url == null)? fallback : url;
     }
 
-    
     /**
      * Adds or replaces preference.
      * 
@@ -696,8 +491,9 @@ public class Preferences {
      * @param urls the value of the preference
      */
     public synchronized void putURLs(String key, URL[] urls) {
-        String[] locations = new String[urls.length];
-        for (int i = 0; i < urls.length; ++i) {
+        final int count = urls.length;
+        String[] locations = new String[count];
+        for (int i = 0; i < count; ++i) {
             locations[i] = urls[i].toExternalForm();
         }
         putStrings(key, locations);
@@ -718,8 +514,9 @@ public class Preferences {
             return fallback;
         }
 
-        URL[] urls = new URL[locations.length];
-        for (int i = 0; i < locations.length; ++i) {
+        final int count = locations.length;
+        URL[] urls = new URL[count];
+        for (int i = 0; i < count; ++i) {
             URL url = null;
             try {
                 url = new URL(locations[i]);
@@ -828,7 +625,8 @@ public class Preferences {
             return fallback;
         }
 
-        for (int i = 0; i < urlMap.length; i += 2) {
+        final int count = urlMap.length;
+        for (int i = 0; i < count; i += 2) {
             try {
                 URL url = new URL(urlMap[i]);
 
@@ -1022,14 +820,14 @@ public class Preferences {
      * @param key the name of the preference
      */
     public synchronized void remove(String key) {
-        map.removePreference(key);
+        properties.remove(key);
     }
 
     /**
      * Removes all preferences.
      */
     public synchronized void removeAll() {
-        map.removeAllPreferences();
+        properties.clear();
     }
 
     /**
@@ -1037,7 +835,19 @@ public class Preferences {
      * list may be empty but cannot be <code>null</code>.
      */
     public synchronized String[] getAll() {
-        return map.getAllPreferences();
+        String[] all = new String[properties.size()*2];
+        int i = 0;
+
+        Iterator<Map.Entry<Object,Object>> iter =  
+            properties.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry<Object,Object> e = iter.next();
+
+            all[i++] = (String) e.getKey();
+            all[i++] = (String) e.getValue();
+        }
+
+        return all;
     }
 
     /**
@@ -1047,70 +857,128 @@ public class Preferences {
      * @param other the source <code>Preferences</code> object
      */
     public synchronized void putAll(Preferences other) {
-        String[] all = other.map.getAllPreferences();
-        for (int i = 0; i < all.length; i += 2) {
-            map.putPreference(all[i], all[i+1]);
+        final String[] all = other.getAll();
+        final int count = all.length;
+        for (int i = 0; i < count; i += 2) {
+            properties.setProperty(all[i], all[i+1]);
         }
     }
 
-    /**
-     * Adds or replaces preferences with preferences read 
-     * from specified <code>java.util.Properties</code> object.
-     * 
-     * @param props specifies the preferences to be added or replaced
-     */
-    public synchronized void putAll(Properties props) {
-        Iterator<java.util.Map.Entry<Object, Object>> iter = 
-            props.entrySet().iterator();
-        while (iter.hasNext()) {
-            java.util.Map.Entry<Object, Object> e = iter.next();
+    // -----------------------------------------------------------------------
 
-            map.putPreference((String) e.getKey(), (String) e.getValue());
+    /**
+     * <em>Merges</em> the contents of specified Java properties file to this
+     * <code>Preferences</code> object.
+     * <p>Invoke {@link #removeAll} if you need to <em>reset</em> this 
+     * <code>Preferences</code> object to the contents of specified file.
+     *
+     * @param file the file to be loaded
+     * @return <code>true</code> if the file has been sucessfully loaded;
+     * <code>false</code> otherwise
+     * 
+     * @see #load(URL)
+     * @see #save
+     */
+    public boolean load(File file) {
+        return load(FileUtil.fileToURL(file));
+    }
+
+    /**
+     * Merges the contents of specified Java properties file to this
+     * <code>Preferences</code> object.
+     *
+     * @param url the location of the file to be loaded
+     * @return <code>true</code> if the file has been sucessfully loaded;
+     * <code>false</code> otherwise
+     * 
+     * @see #load(File)
+     * @see #save
+     */
+    public synchronized boolean load(URL url) {
+        boolean done = false;
+
+        try {
+            load(url, properties);
+            done = true;
+        } catch (IOException ignored) {
+            //ignored.printStackTrace();
         }
+
+        return done;
     }
 
     /**
-     * Equivalent to {@link #putAll(URL) 
-     * putAll(FileUtil.fileToURL(propsFile))}.
+     * Helper method: adds to specified properties the 
+     * contents of specified URL.
+     *
+     * @param url the location of the file to be loaded
+     * @param props the properties to be updated
+     * @exception IOException if for any reason, the properties 
+     * have not been sucessfully updated
      */
-    public synchronized void putAll(File propsFile) throws IOException {
-        putAll(FileUtil.fileToURL(propsFile));
-    }
-
-    /**
-     * Adds or replaces preferences with preferences read 
-     * from specified property file.
-     * 
-     * @param propsURL location of a property file which contains 
-     * the preferences to be added or replaced
-     * @exception IOException if there is problem loading 
-     * the specified property file.
-     */
-    public synchronized void putAll(URL propsURL) 
+    public static void load(URL url, Properties props) 
         throws IOException {
         BufferedInputStream in = 
-            new BufferedInputStream(URLUtil.openStreamNoCache(propsURL), 
-                                    65536);
-
-        Properties props = new Properties();
+            new BufferedInputStream(URLUtil.openStreamNoCache(url), 65536);
         try {
             props.load(in);
         } finally {
             in.close();
         }
-
-        putAll(props);
     }
 
     /**
-     * Saves preferences to the backing store.
-     * 
-     * @return <code>true</code> if preferences have been saved;
-     * <code>false</code> otherwise (I/O error or this Preferences object is
-     * not persistent).
+     * Saves this <code>Preferences</code> object to specified 
+     * Java properties file.
+     *
+     * @param file the save file
+     * @param header optional header for the save file; may be <code>null</code>
+     * @return <code>true</code> if the properties have been sucessfully 
+     * updated; <code>false</code> otherwise
+     * @see #load(File)
+     * @see #load(URL)
      */
-    public synchronized boolean save() {
-        return map.save();
+    public synchronized boolean save(File file, String header) {
+        boolean done = false;
+
+        try {
+            File tmpFile = File.createTempFile("prefs", ".tmp", 
+                                               file.getParentFile());
+            save(properties, tmpFile, header);
+
+            if (file.exists()) {
+                file.delete();
+            }
+            // renameTo is assumed to be atomic.
+            tmpFile.renameTo(file);
+
+            done = true;
+        } catch (IOException ignored) {
+            //ignored.printStackTrace();
+        }
+
+        return done;
+    }
+
+    /**
+     * Helper method: saves specified properties to specified file.
+     *
+     * @param props the properties to be saved
+     * @param file the save file
+     * @param header optional header for the save file; may be <code>null</code>
+     * @exception IOException if for any reason, the properties 
+     * have not been sucessfully saved
+     */
+    public static void save(Properties props, File file, String header) 
+        throws IOException {
+        BufferedOutputStream out = 
+            new BufferedOutputStream(new FileOutputStream(file), 65536);
+        try {
+            props.store(out, ((header == null)? "" : header));
+            out.flush();
+        } finally {
+            out.close();
+        }
     }
 
     // -----------------------------------------------------------------------

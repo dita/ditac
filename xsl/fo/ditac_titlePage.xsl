@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-| Copyright (c) 2009-2013 Pixware SARL. All rights reserved.
+| Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
 |
 | Author: Hussein Shafie (hussein@xmlmind.com)
 |
@@ -546,25 +546,34 @@
   </xsl:template>
 
   <xsl:template name="lastCritdate">
+    <xsl:param name="defaulted" select="false()"/>
+
     <xsl:variable name="date" 
       select="*[contains(@class,' map/topicmeta ')]/*[contains(@class,' topic/critdates ')]/*[last()]"/>
-    <xsl:if test="exists($date)">
-      <xsl:variable name="lang">
-        <xsl:call-template name="lang"/>
-      </xsl:variable>
 
-      <xsl:choose>
-        <xsl:when test="exists($date/@golive)">
-          <xsl:value-of select="Date:format(string($date/@golive), $lang)"/>
-        </xsl:when>
-        <xsl:when test="exists($date/@modified)">
-          <xsl:value-of select="Date:format(string($date/@modified), $lang)"/>
-        </xsl:when>
-        <xsl:when test="exists($date/@date)">
-          <xsl:value-of select="Date:format(string($date/@date), $lang)"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:if>
+    <xsl:variable name="lang">
+      <xsl:call-template name="lang"/>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="exists($date)">
+        <xsl:choose>
+          <xsl:when test="exists($date/@golive)">
+            <xsl:value-of select="Date:format(string($date/@golive), $lang)"/>
+          </xsl:when>
+          <xsl:when test="exists($date/@modified)">
+            <xsl:value-of select="Date:format(string($date/@modified), $lang)"/>
+          </xsl:when>
+          <xsl:when test="exists($date/@date)">
+            <xsl:value-of select="Date:format(string($date/@date), $lang)"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:when>
+
+      <xsl:when test="$defaulted">
+        <xsl:value-of select="Date:format('', $lang)"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>

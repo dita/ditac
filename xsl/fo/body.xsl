@@ -1186,9 +1186,19 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <fo:external-graphic
-          src="{concat('url(', $xslResourcesDir, 'play.png', ')')}" 
-          role="{$label}" />
+        <fo:external-graphic role="{$label}">
+          <xsl:attribute name="src" select="concat('url(', $xslResourcesDir, 
+                                                   'play', $media-icon-suffix, 
+                                                   ')')"/>
+          <xsl:if test="$media-icon-width ne ''">
+            <xsl:attribute name="content-width"
+                           select="u:checkLength($media-icon-width)"/>
+          </xsl:if>
+          <xsl:if test="$media-icon-height ne ''">
+            <xsl:attribute name="content-height" 
+                           select="u:checkLength($media-icon-height)"/>
+          </xsl:if>
+        </fo:external-graphic>
       </xsl:otherwise>
     </xsl:choose>
 

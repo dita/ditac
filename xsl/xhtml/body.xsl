@@ -14,7 +14,7 @@
                 xmlns:ditac="http://www.xmlmind.com/ditac/schema/ditac"
                 exclude-result-prefixes="xs u ditac"
                 version="2.0">
-
+  
   <!-- p ================================================================= -->
 
   <xsl:template match="*[contains(@class,' topic/p ')]">
@@ -217,7 +217,7 @@
               <xsl:call-template name="commonAttributes"/>
               <xsl:call-template name="scopeAttribute"/>
               <xsl:call-template name="descToTitleAttribute"/>
-              <xsl:if test="exists(@id) and
+              <xsl:if test="exists(@id) and 
                             $xhtmlVersion ne '1.1' and $xhtmlVersion ne '5.0'">
                 <xsl:attribute name="name" select="string(@id)"/>
               </xsl:if>
@@ -324,23 +324,23 @@
         <xsl:when test="$xhtmlVersion eq '1.1'">
           <xsl:choose>
             <xsl:when test="$type eq 'a'">
-              <xsl:attribute name="style"
+              <xsl:attribute name="style" 
                              select="'list-style-type: lower-alpha;'"/>
             </xsl:when>
             <xsl:when test="$type eq 'A'">
-              <xsl:attribute name="style"
+              <xsl:attribute name="style" 
                              select="'list-style-type: upper-alpha;'"/>
             </xsl:when>
             <xsl:when test="$type eq 'i'">
-              <xsl:attribute name="style"
+              <xsl:attribute name="style" 
                              select="'list-style-type: lower-roman;'"/>
             </xsl:when>
             <xsl:when test="$type eq 'I'">
-              <xsl:attribute name="style"
+              <xsl:attribute name="style" 
                              select="'list-style-type: upper-roman;'"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:attribute name="style"
+              <xsl:attribute name="style" 
                              select="'list-style-type: decimal;'"/>
             </xsl:otherwise>
           </xsl:choose>
@@ -574,7 +574,7 @@
             <xsl:attribute name="style"
               select="concat('text-align: ', string(@align), ';')"/>
           </xsl:if>
-
+          
           <xsl:call-template name="namedAnchor"/>
           <xsl:call-template name="imageToImg"/>
         </div>
@@ -643,7 +643,7 @@
 
     <!-- Real number optionally followed by a unit of measure from the set of
          pc, pt, px, in, cm, mm, em (picas, points, pixels, inches,
-         centimeters, millimeters, and ems respectively).
+         centimeters, millimeters, and ems respectively). 
          The default unit is px (pixels). -->
 
     <xsl:choose>
@@ -657,12 +657,12 @@
 
         <xsl:variable name="unit"
           select="substring($length, string-length($length)-1)"/>
-
-        <xsl:if test="not((number($value) gt 0) and
-                          ($unit eq 'pc' or $unit eq 'pt' or $unit eq 'px' or
-                           $unit eq 'in' or $unit eq 'cm' or $unit eq 'mm' or
+        
+        <xsl:if test="not((number($value) gt 0) and 
+                          ($unit eq 'pc' or $unit eq 'pt' or $unit eq 'px' or 
+                           $unit eq 'in' or $unit eq 'cm' or $unit eq 'mm' or 
                            $unit eq 'em'))">
-          <xsl:message terminate="yes"
+          <xsl:message terminate="yes" 
              select="concat('&quot;', $length, '&quot;, invalid length')" />
         </xsl:if>
 
@@ -718,7 +718,7 @@
 
   <xsl:template name="longdescrefToLongdescAttribute">
     <xsl:if test="$xhtmlVersion ne '-3.2' and $xhtmlVersion ne '5.0'">
-      <xsl:variable name="href"
+      <xsl:variable name="href" 
                     select="./*[contains(@class,' topic/longdescref ')]/@href"/>
 
       <xsl:if test="$href">
@@ -740,7 +740,7 @@
   </xsl:template>
 
   <!-- object ============================================================ -->
-
+ 
   <xsl:template match="*[contains(@class,' topic/object ')]">
     <xsl:call-template name="processObject"/>
   </xsl:template>
@@ -820,7 +820,7 @@
   <xsl:template name="processAudioVideoParams">
     <xsl:param name="isAudio" select="false()"/>
 
-    <!-- Unlike XHTML, DITA supports the following  units:
+    <!-- Unlike XHTML, DITA supports the following  units: 
          px, pc, pt, cm, mm, in. -->
     <xsl:if test="not($isAudio)">
       <xsl:if test="exists(@width)">
@@ -836,7 +836,7 @@
       <xsl:variable name="paramName" select="string(@name)"/>
       <xsl:variable name="paramValue" select="string(@value)"/>
 
-      <xsl:if test="$paramName ne '' and
+      <xsl:if test="$paramName ne '' and 
                     $paramName ne 'source.src' and $paramName ne 'source.type'">
         <xsl:choose>
           <xsl:when test="$paramName eq 'autoplay' or
@@ -859,9 +859,9 @@
 
     <!-- Alternate sources -->
 
-    <xsl:for-each-group select="$params"
+    <xsl:for-each-group select="$params" 
                         group-starting-with="*[@name eq 'source.src']">
-      <xsl:variable name="typeParam"
+      <xsl:variable name="typeParam" 
                     select="current-group()[@name eq 'source.type']"/>
       <xsl:if test="exists($typeParam)">
         <xsl:variable name="src" select="string(current-group()[1]/@value)"/>
@@ -939,13 +939,13 @@
 
     <xsl:variable name="label" select="u:basename($download)"/>
 
-    <xsl:variable name="posterParam"
-                  select="./*[contains(@class,' topic/param ') and
+    <xsl:variable name="posterParam" 
+                  select="./*[contains(@class,' topic/param ') and 
                               @name eq 'poster' and
                               string-length(@value) gt 0]"/>
 
-    <xsl:variable name="posterPath"
-                  select="if (exists($posterParam))
+    <xsl:variable name="posterPath" 
+                  select="if (exists($posterParam)) 
                           then normalize-space($posterParam[1]/@value)
                           else ''"/>
 
@@ -960,8 +960,8 @@
         <xsl:variable name="posterWidth2" select="number($posterWidth)"
                       as="xs:double"/>
 
-        <xsl:variable name="width"
-                      select="if ($posterWidth2 gt 0 and $posterWidth2 le 128)
+        <xsl:variable name="width" 
+                      select="if ($posterWidth2 gt 0 and $posterWidth2 le 128) 
                               then xs:integer($posterWidth2)
                               else 128"
                       as="xs:integer"/>
@@ -1009,7 +1009,7 @@
       <xsl:call-template name="namedAnchor"/>
 
       <xsl:choose>
-        <xsl:when test="$highlight-source eq 'yes' and
+        <xsl:when test="$highlight-source eq 'yes' and 
                         starts-with(@outputclass, 'language-')">
           <xsl:variable name="source">
             <xsl:copy>
@@ -1025,9 +1025,9 @@
               </xsl:for-each>
             </xsl:copy>
           </xsl:variable>
-
+          
           <xsl:call-template name="syntaxHighlight">
-            <xsl:with-param name="language"
+            <xsl:with-param name="language" 
               select="lower-case(substring-after(@outputclass, '-'))" />
             <xsl:with-param name="source" select="$source/*" />
           </xsl:call-template>
@@ -1054,7 +1054,7 @@
 
   <xsl:template match="*[contains(@class,' topic/lq ')]">
     <blockquote>
-      <xsl:variable name="longquoteref"
+      <xsl:variable name="longquoteref" 
         select="(./*[contains(@class,' topic/longquoteref ')])[1]"/>
 
       <xsl:variable name="href">
@@ -1104,14 +1104,14 @@
             <xsl:choose>
               <xsl:when test="$href ne ''">
                 <a href="{$href}">
-                  <xsl:if test="$scope eq 'external' and
+                  <xsl:if test="$scope eq 'external' and 
                                 $xhtmlVersion ne '1.1'">
                     <xsl:attribute name="target">_blank</xsl:attribute>
                   </xsl:if>
 
                   <xsl:value-of select="@reftitle"/>
 
-                  <xsl:if test="$scope eq 'external' and
+                  <xsl:if test="$scope eq 'external' and 
                                 $xhtmlVersion ne '1.1'">
                     <xsl:call-template name="addExternalLinkIcon"/>
                   </xsl:if>

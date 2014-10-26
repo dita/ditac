@@ -4,9 +4,9 @@
       
       <title>Part I, Chapter 1. Installing XMLmind DITA Converter</title>
       <link href="resources/webhelp.css" rel="stylesheet" type="text/css" />
-      <meta content="XMLmind DITA Converter 2.5.1" name="generator" />
-   <script charset="UTF-8" src="_wh/snowball_en.min.js" type="text/javascript"></script><link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" /><link href="_wh/wh.css" rel="stylesheet" type="text/css" /><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript">
-    </script><script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript">
+      <meta content="XMLmind DITA Converter 2.5.3" name="generator" />
+   <script charset="UTF-8" src="_wh/snowball_en.min.js" type="text/javascript"></script><link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" /><link href="_wh/wh.css" rel="stylesheet" type="text/css" /><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript">
+    </script><script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js" type="text/javascript">
     </script><script charset="UTF-8" src="_wh/wh.min.js" type="text/javascript">
     </script><script charset="UTF-8" src="_wh/search.js" type="text/javascript">
     </script><link href="_wh/user/header_footer.css" rel="stylesheet" type="text/css" /></head>
@@ -61,12 +61,12 @@
       <div id="wh-content">
       
       <section class="task" id="install">
-         <h2 class="chapter-title">Chapter 1. Installing XMLmind DITA Converter <span class="topic-navigation-bar"><img alt="Previous topic" class="navigation-icon-disabled" height="16" src="resources/previous_disabled.png" title="Previous topic" width="16" /> <a accesskey="U" class="navigation-link" href="manual-3.html#I_irl9y2_" title="Parent topic: Part I. Using XMLmind DITA Converter"><img alt="Parent topic" class="navigation-icon" height="16" src="resources/parent.png" width="16" /></a> <a accesskey="D" class="navigation-link" href="install.html#distrib" title="Child topic: Section 1. Contents of the installation directory"><img alt="Child topic" class="navigation-icon" height="16" src="resources/child.png" width="16" /></a> <a accesskey="R" class="navigation-link" href="manual-4.html#I_txyyp2_" title="Next topic: Chapter 2. Getting started"><img alt="Next topic" class="navigation-icon" height="16" src="resources/next.png" width="16" /></a></span></h2>
+         <h2 class="chapter-title">Chapter 1. Installing XMLmind DITA Converter <span class="topic-navigation-bar"><img alt="Previous topic" class="navigation-icon-disabled" height="16" src="resources/previous_disabled.png" title="Previous topic" width="16" /> <a accesskey="U" class="navigation-link" href="manual-3.html#I_q0xrkt_" title="Parent topic: Part I. Using XMLmind DITA Converter"><img alt="Parent topic" class="navigation-icon" height="16" src="resources/parent.png" width="16" /></a> <a accesskey="D" class="navigation-link" href="install.html#distrib" title="Child topic: Section 1. Contents of the installation directory"><img alt="Child topic" class="navigation-icon" height="16" src="resources/child.png" width="16" /></a> <a accesskey="R" class="navigation-link" href="manual-4.html#I_bkgfuv_" title="Next topic: Chapter 2. Getting started"><img alt="Next topic" class="navigation-icon" height="16" src="resources/next.png" width="16" /></a></span></h2>
          <div class="taskbody">
-            <section class="prereq" id="install__I_yilqad_">
+            <section class="prereq" id="install__I_90f3f7_">
                <h3 class="prereq-title">Before you begin</h3>
                <div class="p">XMLmind DITA Converter (<i class="i">ditac</i> for short) requires the
-                  Oracle or Apple <span class="tm">Java™</span> runtime 1.5 or above.
+                  Oracle or Apple <span class="tm">Java™</span> runtime 1.6 or above.
                </div>
                <div class="p">On
                   Unix, make sure that the Java <code class="filepath">bin/</code> directory is
@@ -86,16 +86,16 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.45-b08, mixed mode)</pre><div class=
                <ol class="step-list">
                   <li class="required-step"><span class="cmd">Unzip the distribution in any directory you want.</span><div class="stepxmp"><pre class="screen">C:\&gt; mkdir ditac
 C:\&gt; cd ditac
-C:\ditac&gt; unzip ditac-2_5_1.zip
-C:\ditac&gt; dir ditac-2_5_1
+C:\ditac&gt; unzip ditac-2_5_3.zip
+C:\ditac&gt; dir ditac-2_5_3
 ... &lt;DIR&gt; bin
 ... &lt;DIR&gt; doc
 ... &lt;DIR&gt; docsrc
 ...</pre></div>
                      <div class="stepresult">XMLmind DITA Converter is intended to be used directly
-                        from the <code class="filepath">ditac-2_5_1/</code> directory. That is, you can
+                        from the <code class="filepath">ditac-2_5_3/</code> directory. That is, you can
                         run the <code class="cmdname">ditac</code> command by simply executing (in a
-                        Command Prompt on windows, a terminal on Unix):<pre class="screen">C:\ditac&gt; ditac-2_5_1\bin\ditac</pre></div>
+                        Command Prompt on windows, a terminal on Unix):<pre class="screen">C:\ditac&gt; ditac-2_5_3\bin\ditac</pre></div>
                   </li>
                   <li class="optional-step"><span class="cmd">Depending the output formats you want to generate, you'll need to
                         download and install third-party external tools.</span><ul class="choices">
@@ -165,7 +165,7 @@ C:\ditac&gt; dir ditac-2_5_1
                         <a class="xref" href="commandLine.html#commandLine__option-hhc"><code class="option">-hhc</code></a>.
                         However, it is much more convenient to specify these command-line
                         options once for all in a
-                        <code class="filepath">ditac.options</code><a id="install__I_akjynd_"></a> file.</span><ol class="substeps">
+                        <code class="filepath">ditac.options</code><a id="install__I_ze0yuo_"></a> file.</span><ol class="substeps">
                         <li class="substep"><span class="cmd">Create <code class="filepath">ditac.options</code>, a plain text file
                               encoded using the native encoding of the platform (e.g.
                               <span class="tt">Windows-1252</span> on a Western Windows PC), in the ditac user

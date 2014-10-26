@@ -61,7 +61,7 @@
 
   <target name="compile" depends="init">
     <javac includeantruntime="false" debug="on" debuglevel="source,lines" 
-           deprecation="on" classpathref="cp" source="1.5" target="1.5" 
+           deprecation="on" classpathref="cp" source="1.6" target="1.6" 
            destdir="build" srcdir="com" />
   </target>
 
@@ -75,7 +75,7 @@
         <attribute name="Class-Path"
                    value="whcmin.jar snowball.jar resolver.jar saxon9.jar"/>
         <attribute name="Implementation-Title" value="XMLmind DITA Converter"/>
-        <attribute name="Implementation-Version" value="2.5.1"/>
+        <attribute name="Implementation-Version" value="2.5.3"/>
         <attribute name="Implementation-Vendor" value="XMLmind"/>
         <attribute name="Implementation-Vendor-Id" value="com.xmlmind"/>
       </manifest>
@@ -95,7 +95,7 @@
       </fileset>
 
       <doctitle><![CDATA[XMLmind DITA Converter Java<sup><small>TM</small></sup> API]]></doctitle>
-      <link href="http://download.oracle.com/javase/1.5.0/docs/api"/>
+      <link href="http://download.oracle.com/javase/1.6.0/docs/api"/>
     </javadoc>
   </target>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2011 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
  * A collection of utility functions (static methods) operating on arrays.
  * Complements what's found in java.util.Arrays.
  */
+@SuppressWarnings("unchecked")
 public final class ArrayUtil {
     private ArrayUtil() {}
 

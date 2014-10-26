@@ -26,7 +26,7 @@
         </xsl:call-template>
       </h1>
 
-      <xsl:variable name="items"
+      <xsl:variable name="items" 
                     select="$ditacLists/ditac:figureList/ditac:figure"/>
       <xsl:if test="exists($items)">
         <table class="booklist">
@@ -47,7 +47,7 @@
         </xsl:call-template>
       </h1>
 
-      <xsl:variable name="items"
+      <xsl:variable name="items" 
                     select="$ditacLists/ditac:tableList/ditac:table"/>
       <xsl:if test="exists($items)">
         <table class="booklist">
@@ -68,7 +68,7 @@
         </xsl:call-template>
       </h1>
 
-      <xsl:variable name="items"
+      <xsl:variable name="items" 
                     select="$ditacLists/ditac:exampleList/ditac:example"/>
       <xsl:if test="exists($items)">
         <table class="booklist">
@@ -90,7 +90,7 @@
         <xsl:choose>
           <xsl:when test="$num ne ''">
             <!-- Discard leading 'Figure ', 'Table ', 'Example '. -->
-            <xsl:value-of select="concat(substring-after($num, '&#xA0;'),
+            <xsl:value-of select="concat(substring-after($num, '&#xA0;'), 
                                          $title-prefix-separator1)"/>
           </xsl:when>
           <xsl:otherwise>&#xA0;</xsl:otherwise>
@@ -101,8 +101,8 @@
         <xsl:call-template name="tableLayoutAttributes">
           <xsl:with-param name="valign" select="'baseline'"/>
         </xsl:call-template>
-
-        <a href="{u:joinLinkTarget(@file, @id)}"
+              
+        <a href="{u:joinLinkTarget(@file, @id)}" 
            class="booklist-item-title"><xsl:value-of select="@title"/></a>
 
         <xsl:if test="exists(./ditac:description)">

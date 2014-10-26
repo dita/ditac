@@ -1,4 +1,4 @@
-XSLT syntax highlighting 2.0.2
+XSLT syntax highlighting 2.0.3
 ------------------------------
 
 This is an implementation of syntax highlighting as an extension module for
@@ -18,8 +18,8 @@ See:
 Changes made by XMLmind
 -----------------------
 
-* Replaced src/net/sf/xslthl/ConnectorSaxonB.java (obsolete Saxon 9 Basic) by
-  ConnectorSaxonHE.java (Saxon 9 Home Edition).
+* Replaced src/net/sf/xslthl/ConnectorSaxonB.java (obsolete Saxon 9 Basic) by 
+  ConnectorSaxonHE.java (Saxon 9.5+ Home Edition).
 
 * In src/net/sf/xslthl/CharIter.java, made the following change:
 
@@ -42,8 +42,8 @@ $ diff -u CharIter.java.ORI CharIter.java
      /**
 ------------------------------------------------------------------------------
 
-Without this change, XMLHighlighter.highlight raised a
-StringIndexOutOfBoundsException when the XML text to be highlighted
+Without this change, XMLHighlighter.highlight raised a 
+StringIndexOutOfBoundsException when the XML text to be highlighted 
 contained nested elements like for example in:
 
 ---
@@ -51,8 +51,8 @@ contained nested elements like for example in:
 ---
 
 In the above example, the text to be highlighted is basically
-"<db:xref linkend='foo'/>". However, this text also contains
+"<db:xref linkend='foo'/>". However, this text also contains 
 a <i> nested element, which triggered the bug.
 
-If you are interesting in getting the source code of these changes,
+If you are interesting in getting the source code of these changes, 
 please send an email to hussein AT xmlmind DOT com.

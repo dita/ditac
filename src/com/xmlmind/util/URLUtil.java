@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2013 Pixware SARL. All rights reserved.
+ * Copyright (c) 2002-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -49,7 +49,10 @@ public final class URLUtil {
      */
     public static URL createURL(String spec)
         throws MalformedURLException {
-        return new URL(URIComponent.encode(spec));
+        if (!spec.startsWith("data:")) {
+            spec = URIComponent.encode(spec);
+        }
+        return new URL(spec);
     }
 
     /**
@@ -61,7 +64,10 @@ public final class URLUtil {
      */
     public static URL createURL(URL context, String spec)
         throws MalformedURLException {
-        return new URL(context, URIComponent.encode(spec));
+        if (!spec.startsWith("data:")) {
+            spec = URIComponent.encode(spec);
+        }
+        return new URL(context, spec);
     }
 
     /**
@@ -74,7 +80,10 @@ public final class URLUtil {
     public static URL createURL(URL context, String spec,
                                 URLStreamHandler handler) 
         throws MalformedURLException {
-        return new URL(context, URIComponent.encode(spec), handler);
+        if (!spec.startsWith("data:")) {
+            spec = URIComponent.encode(spec);
+        }
+        return new URL(context, spec, handler);
     }
 
     // -----------------------------------------------------------------------
@@ -976,8 +985,48 @@ public final class URLUtil {
      * shorter than specified length (when possible). This function is useful
      * to display the recently opened URLs in the <b>File</b> menu of an
      * application.
+     * <p>Supports "<tt>jar:</tt>" URLs, but returns other opaque URLs as is.
      */
     public static String toShortDisplayForm(URL url, int maxLength) {
+        if (isJarURL(url)) {
+            String jarLocation = url.toExternalForm();
+
+            String archiveLocation, entryPath;
+            int separ = jarLocation.indexOf("!/");
+            if (separ < 0) {
+                // Cannot happen.
+                return jarLocation;
+            }
+
+            archiveLocation = jarLocation.substring(4, separ);
+            entryPath = jarLocation.substring(separ+1); // Starts with "/".
+
+            URL archiveURL;
+            try {
+                archiveURL = new URL(archiveLocation);
+            } catch (MalformedURLException ignored) {
+                return jarLocation;
+            }
+
+            maxLength -= 5;
+            int maxLength2 = Math.min(maxLength/2, entryPath.length());
+            int maxLength1 = maxLength-maxLength2;
+            if (maxLength1 <= 0) {
+                maxLength1 = 10;
+            }
+            if (maxLength2 <= 0) {
+                maxLength2 = 10;
+            }
+
+            StringBuilder buffer = new StringBuilder("jar:");
+            buffer.append(toShortDisplayForm(archiveURL, maxLength1));
+            buffer.append('!');
+            buffer.append(URIComponent.truncatePath(entryPath, maxLength2));
+            return buffer.toString();
+        }
+
+        // ---
+
         URI uri = urlToURI(url);
         if (uri == null || uri.isOpaque()) {
             return url.toExternalForm();
@@ -1486,6 +1535,36 @@ public final class URLUtil {
     public static InputStream openStreamNoCache(URL url) 
         throws IOException {
         URLConnection connection = openConnectionNoCache(url);
+        return connection.getInputStream();
+    }
+
+    /**
+     * Similar to <code>url.openConnection</code> except that the accessed
+     * resource may be a cached copy.
+     * 
+     * @param url URL for which an URLConnection must be opened
+     * @exception IOException if URLConnection cannot be opened
+     * @see #openStreamUseCache(URL)
+     */
+    public static URLConnection openConnectionUseCache(URL url) 
+        throws IOException {
+        URLConnection connection = url.openConnection();
+        connection.setUseCaches(true); // Normally the default, so just in case.
+        return connection;
+    }
+
+    /**
+     * Similar to <code>url.openStream</code> except that the accessed
+     * resource may be a cached copy.
+     * 
+     * @param url URL for which an input stream must be opened
+     * @return opened input stream
+     * @exception IOException if the input stream cannot be opened
+     * @see #openConnectionUseCache(URL)
+     */
+    public static InputStream openStreamUseCache(URL url) 
+        throws IOException {
+        URLConnection connection = openConnectionUseCache(url);
         return connection.getInputStream();
     }
 }

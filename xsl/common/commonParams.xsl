@@ -12,14 +12,14 @@
                 exclude-result-prefixes="xs"
                 version="2.0">
 
-  <!-- 'auto', 'none',
+  <!-- 'auto', 'none', 
         URI (if relative, relative to the current working directory) -->
   <xsl:param name="title-page" select="'auto'"/>
 
   <!-- 'frontmatter', 'backmatter', 'both', 'none'. -->
   <xsl:param name="extended-toc" select="'none'"/>
 
-  <!-- One or more of: 'topic', 'chapter-only', 'table', 'fig',
+  <!-- One or more of: 'topic', 'chapter-only', 'table', 'fig', 
        'example', 'all'. -->
   <xsl:param name="number" select="''"/>
   <xsl:variable name="numberList" select="tokenize($number, '\s+')"/>
@@ -70,7 +70,7 @@
 
   <xsl:param name="index-range-separator" select="'&#x2013;'"/>
 
-  <!-- Encoding of the text file referenced by coderef/@href.
+  <!-- Encoding of the text file referenced by coderef/@href. 
        Empty string means: to be determined automatically. -->
   <xsl:param name="text-file-encoding" select="''"/>
 

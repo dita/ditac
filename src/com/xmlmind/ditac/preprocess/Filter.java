@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 Pixware SARL. All rights reserved.
+ * Copyright (c) 2009-2014 Pixware SARL. All rights reserved.
  *
  * Author: Hussein Shafie
  *
@@ -85,14 +85,13 @@ public final class Filter implements Constants {
             return values;
         }
 
-        public PropValue findValue(String value) {
-            int valueCount = values.length;
-            for (int i = 0; i < valueCount; ++i) {
-                String propValue = values[i].value;
+        public PropValue findValue(String searched) {
+            for (PropValue value : values) {
+                String v = value.value;
 
-                if (propValue == null || // Wildcard.
-                    propValue.equals(value)) {
-                    return values[i];
+                if (v == null || // Wildcard.
+                    v.equals(searched)) {
+                    return value;
                 }
             }
 
@@ -1217,18 +1216,13 @@ public final class Filter implements Constants {
 
     private Object computeAction(String attrName, String attrValue, 
                                  Flags flags, boolean[] hasFlags) {
-        Prop prop = findProp(attrName);
-        if (prop == null) {
-            return null;
-        }
-
         int excludeCount = 0;
 
-        String[] values = XMLText.splitList(attrValue);
-        int valueCount = values.length;
+        final String[] values = XMLText.splitList(attrValue);
+        final int valueCount = values.length;
 
         for (int j = 0; j < valueCount; ++j) {
-            PropValue propValue = prop.findValue(values[j]);
+            PropValue propValue = findPropValue(attrName, values[j]);
             if (propValue != null) {
                 switch (propValue.action) {
                 case EXCLUDE:
@@ -1240,6 +1234,7 @@ public final class Filter implements Constants {
                     break;
                 }
             }
+            // Otherwise, action is include.
         }
 
         if (excludeCount == valueCount) {
@@ -1249,14 +1244,30 @@ public final class Filter implements Constants {
         return null;
     }
 
-    private Prop findProp(String attribute) {
-        int propCount = props.length;
-        for (int i = 0; i < propCount; ++i) {
-            String propAttribute = props[i].attribute;
-            if ((propAttribute == null && // Wildcard.
-                 StringList.contains(filterAttributes, attribute)) || 
-                propAttribute.equals(attribute)) {
-                return props[i];
+    private PropValue findPropValue(String attribute, String value) {
+        for (Prop prop : props) {
+            String propAttribute = prop.attribute;
+
+            if (propAttribute == null) { // Wildcard.
+                boolean found = false;
+                for (String filterAttribute : filterAttributes) {
+                    if (filterAttribute.equals(attribute)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    PropValue propValue = prop.findValue(value);
+                    if (propValue != null) {
+                        return propValue;
+                    }
+                }
+            } else if (propAttribute.equals(attribute)) {
+                PropValue propValue = prop.findValue(value);
+                if (propValue != null) {
+                    return propValue;
+                }
             }
         }
 

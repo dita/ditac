@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2010 Pixware. 
+ * Copyright (c) 2007-2014 Pixwar SARL. All rights reserved. 
  *
  * Author: Hussein Shafie
  *
@@ -30,7 +30,7 @@ public interface ProgressMonitor {
      * @param message message containing information about the step being
      * executed
      * @param messageType type of message. 
-     * May be <code>null</null> which is equivalent to INFO.
+     * May be <code>null</code> which is equivalent to INFO.
      * @return <code>false</code> if this monitor wants to cancel the lengthy
      * task; <code>true</code> otherwise
      */

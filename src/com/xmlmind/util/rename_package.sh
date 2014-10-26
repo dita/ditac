@@ -8,7 +8,7 @@ for i in *.java; do
 done
 
 cp SystemUtil.java /tmp/rename_package.tmp
-sed -e 's^XMLEditor5^ditac^g' \
-    -e 's^"xxe5"^"ditac"^g' \
+sed -e 's^XMLEditor6^ditac^g' \
+    -e 's^"xxe6"^"ditac"^g' \
     /tmp/rename_package.tmp > SystemUtil.java
 
